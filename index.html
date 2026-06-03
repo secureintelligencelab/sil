@@ -438,38 +438,7 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
       <button class="filter-btn" data-filter="active">Active</button>
       <button class="filter-btn" data-filter="completed">Completed</button>
     </div>
-    <div class="projects">
-      <div class="project reveal" data-status="active">
-        <div class="status active"><span class="dot"></span>Active</div>
-        <h3>Hierarchical IDS for Zero-Day Attack Detection in IoMT</h3>
-        <p>A hierarchical intrusion detection system to detect zero-day attacks in the Internet of Medical Things using advanced machine learning techniques.</p>
-      </div>
-      <div class="project reveal" data-status="active">
-        <div class="status active"><span class="dot"></span>Active</div>
-        <h3>Zero-Knowledge Proofs for Pharmaceutical Traceability</h3>
-        <p>A blockchain-supported pharmaceutical traceability and recall platform designed for the Australian Capital Territory (ACT) public health context.</p>
-      </div>
-      <div class="project reveal" data-status="active">
-        <div class="status active"><span class="dot"></span>Active</div>
-        <h3>Explainable Hierarchical Model for Lung &amp; Colon Cancer Detection</h3>
-        <p>An explainable hierarchical deep-learning framework that decomposes diagnosis into clinically meaningful stages, emulating the stepwise reasoning of pathologists.</p>
-      </div>
-      <div class="project reveal" data-status="active">
-        <div class="status active"><span class="dot"></span>Active</div>
-        <h3>Keystroke Dynamics–Based Authentication</h3>
-        <p>A hybrid machine-learning authentication framework that leverages keystroke dynamics to verify user identity and detect imposters.</p>
-      </div>
-      <div class="project reveal" data-status="active">
-        <div class="status active"><span class="dot"></span>Active</div>
-        <h3>Graph-Based Semi-Supervised Detection of Illicit Bitcoin</h3>
-        <p>A framework addressing the labeling challenge while comparing classical ML, ensemble, deep learning, and graph neural network approaches for detecting illicit Bitcoin transactions.</p>
-      </div>
-      <div class="project reveal" data-status="completed">
-        <div class="status completed"><span class="dot"></span>Completed</div>
-        <h3>Scalable Hierarchical Intrusion Detection for IoV</h3>
-        <p>Hierarchical classification to detect cyberattacks from network traffic in the Internet of Vehicles, achieving 99.2% accuracy.</p>
-      </div>
-    </div>
+    <div class="projects" id="projectsList"></div>
   </div>
 </section>
 
@@ -566,6 +535,7 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
 
 <button class="totop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
+<script src="data-projects.js"></script>
 <script src="data-publications.js"></script>
 <script src="data-events.js"></script>
 <script>
@@ -595,20 +565,40 @@ const io=new IntersectionObserver(es=>{
 },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*0.06)+'s';io.observe(el)});
 
-// project filter
-const fbtns=document.querySelectorAll('.filter-btn');
-const projects=document.querySelectorAll('.project');
-fbtns.forEach(b=>b.addEventListener('click',()=>{
-  fbtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');
-  const f=b.dataset.filter;
-  projects.forEach(p=>{
-    const show=f==='all'||p.dataset.status===f;
-    p.style.display=show?'':'none';
-  });
-}));
-
 // ---- helpers ----
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ---- render projects from data-projects.js ----
+const projectsList=document.getElementById('projectsList');
+function renderProjects(filter){
+  const data=(typeof PROJECTS!=='undefined')?PROJECTS:[];
+  const show=data.filter(p=>{
+    const st=(p.status==='completed')?'completed':'active';
+    return filter==='all'||st===filter;
+  });
+  if(!show.length){
+    projectsList.innerHTML='<p class="events-empty">No projects to show here yet.</p>';
+    return;
+  }
+  projectsList.innerHTML=show.map(p=>{
+    const st=(p.status==='completed')?'completed':'active';
+    const label=st==='completed'?'Completed':'Active';
+    const icon=st==='completed'?'fa-check-circle':'fa-circle';
+    return `<div class="project reveal" data-status="${st}">
+      <div class="status ${st}"><span class="dot"></span>${label}</div>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.desc)}</p>
+    </div>`;
+  }).join('');
+  projectsList.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+renderProjects('all');
+const fbtns=document.querySelectorAll('.filter-btn');
+fbtns.forEach(b=>b.addEventListener('click',()=>{
+  fbtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  renderProjects(b.dataset.filter);
+}));
+
 
 // ---- render publications from data-publications.js ----
 const pubList=document.getElementById('pubList');
