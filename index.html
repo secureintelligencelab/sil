@@ -1,1638 +1,718 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Intelligence Lab - Crown Institute of Higher Education</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #f093fb;
-            --success-color: #4CAF50;
-            --warning-color: #ff9800;
-            --danger-color: #f44336;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-accent: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --text-light: #ffffff;
-            --text-dark: #333333;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
-            --shadow-heavy: 0 15px 60px rgba(0, 0, 0, 0.2);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: var(--gradient-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: var(--gradient-primary);
-        }
-
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .shape:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { width: 120px; height: 120px; left: 20%; animation-delay: 2s; }
-        .shape:nth-child(3) { width: 60px; height: 60px; left: 70%; animation-delay: 4s; }
-        .shape:nth-child(4) { width: 100px; height: 100px; left: 80%; animation-delay: 1s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-30px) rotate(120deg); }
-            66% { transform: translateY(-60px) rotate(240deg); }
-        }
-
-        /* Scroll Progress Bar */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: var(--gradient-accent);
-            z-index: 1001;
-            transition: width 0.1s ease;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        .nav-links a.active {
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--primary-color);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            color: var(--primary-color);
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .theme-toggle:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu .nav-links {
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .mobile-menu .nav-links a {
-            font-size: 1.5rem;
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Main Content */
-        main {
-            margin-top: 80px;
-            background: white;
-            border-radius: 30px 30px 0 0;
-            box-shadow: var(--shadow-heavy);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 6rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="4"/></g></svg>');
-            animation: movePattern 20s linear infinite;
-        }
-
-        @keyframes movePattern {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(60px) translateY(60px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            opacity: 0;
-            animation: slideInUp 1s ease 0.3s forwards;
-        }
-
-        .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            opacity: 0;
-            animation: slideInUp 1s ease 0.6s forwards;
-        }
-
-        .hero .description {
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: slideInUp 1s ease 0.9s forwards;
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: slideInUp 1s ease 1.2s forwards;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transition: var(--transition);
-            font-weight: 600;
-        }
-
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            color: white;
-        }
-
-        .cta-button.secondary:hover {
-            background: white;
-            color: var(--primary-color);
-        }
-
-        /* Sections */
-        section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-            font-weight: 800;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 4rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* About Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-bottom: 4rem;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 2rem;
-            background: var(--gradient-secondary);
-            border-radius: 20px;
-            color: white;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: var(--transition);
-        }
-
-        .stat:hover::before {
-            left: 100%;
-        }
-
-        .stat:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat h3 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 800;
-        }
-
-        .stat p {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        /* Team Section */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .team-member {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-member::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-        }
-
-        .team-member:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .team-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-photo::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: var(--transition);
-        }
-
-        .team-member:hover .team-photo::after {
-            transform: translateX(100%);
-        }
-
-        .team-member h3 {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .team-member .role {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Projects Section */
-        .projects-filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-light);
-            border-left: 5px solid var(--primary-color);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            transform: translate(50%, -50%);
-            opacity: 0.1;
-        }
-
-        .project:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .project h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: rgba(76, 175, 80, 0.1);
-            color: var(--success-color);
-        }
-
-        .status-completed {
-            background: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
-        }
-
-        /* Publications Section */
-        .publications-search {
-            max-width: 500px;
-            margin: 0 auto 3rem;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-        }
-
-        .publication {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-light);
-            border-left: 4px solid var(--secondary-color);
-            transition: var(--transition);
-        }
-
-        .publication:hover {
-            box-shadow: var(--shadow-medium);
-            transform: translateX(5px);
-        }
-
-        .publication h4 {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .publication-authors {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-        }
-
-        .publication-venue {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            margin-top: 3rem;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .submit-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-color);
-            color: white;
-            padding: 4rem 0 2rem;
-            margin-top: 5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: var(--primary-color);
-            font-size: 1.3rem;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: #bbb;
-            text-decoration: none;
-            line-height: 1.8;
-            transition: var(--transition);
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #444;
-            color: #bbb;
-        }
-
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 999;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            nav {
-                padding: 0 1rem;
-            }
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Section backgrounds */
-        section:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        /* Loading Animation */
-        .loading {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
-
-        .loading.loaded {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Dark Theme */
-        body.dark-theme {
-            --text-dark: #ffffff;
-            --text-light: #333333;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-        }
-
-        body.dark-theme main {
-            background: #2c3e50;
-            color: white;
-        }
-
-        body.dark-theme section:nth-child(even) {
-            background: #34495e;
-        }
-
-        body.dark-theme .team-member,
-        body.dark-theme .project,
-        body.dark-theme .publication,
-        body.dark-theme .contact-form,
-        body.dark-theme .contact-item {
-            background: #34495e;
-            color: white;
-        }
-
-        body.dark-theme header {
-            background: rgba(44, 62, 80, 0.95);
-        }
-
-        body.dark-theme .nav-links a {
-            color: white;
-        }
-
-        body.dark-theme .form-control {
-            background: #2c3e50;
-            color: white;
-            border-color: #444;
-        }
-
-        body.dark-theme .search-input {
-            background: #2c3e50;
-            color: white;
-            border-color: #444;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Intelligence Lab — Crown Institute of Higher Education</title>
+<meta name="description" content="The Secure Intelligence Lab at Crown Institute of Higher Education advances cybersecurity research through artificial intelligence and machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f3ee;
+  --paper-2:#ebe7de;
+  --ink:#0f1b33;
+  --ink-soft:#42506b;
+  --ink-faint:#8a93a6;
+  --accent:#14264f;
+  --accent-deep:#0a1830;
+  --gold:#c79a3a;
+  --gold-soft:#e6c878;
+  --line:#d8d3c7;
+  --white:#fffefb;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Archivo","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --maxw:1180px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:var(--white)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* paper grain */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+/* progress */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:200;transition:width .1s linear}
+
+/* header */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  background:rgba(244,241,234,.82);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease),background .3s var(--ease);
+}
+header{border-top:3px solid var(--gold)}
+header.scrolled{border-color:var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:1.1rem 2rem}
+.brand{display:flex;align-items:center;gap:.85rem;font-family:var(--serif);font-weight:700;font-size:1.55rem;letter-spacing:-.015em}
+.brand .mark{
+  width:42px;height:42px;border:2px solid var(--ink);border-radius:50%;
+  display:grid;place-items:center;font-family:var(--mono);font-size:.7rem;font-weight:500;
+  background:var(--ink);color:var(--gold-soft);
+}
+.brand .mark i{font-size:1.05rem}
+.nav-links{display:flex;gap:.15rem;list-style:none;align-items:center}
+.nav-links a{
+  font-size:.95rem;font-weight:600;letter-spacing:.01em;padding:.55rem 1.05rem;border-radius:6px;
+  color:var(--ink);transition:color .25s var(--ease),background .25s var(--ease);position:relative;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:1.05rem;right:1.05rem;bottom:.3rem;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:center;transition:transform .3s var(--ease);border-radius:2px;
+}
+.nav-links a:hover{color:var(--accent);background:rgba(20,38,79,.06)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.active{color:#fff;background:var(--accent)}
+.nav-links a.active::after{transform:scaleX(0)}
+.menu-btn{display:none;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--ink)}
+
+/* hero */
+.hero{padding:11rem 0 5.5rem;position:relative}
+.hero .eyebrow{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.6rem;opacity:0;animation:rise .8s var(--ease) .1s forwards;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:600;font-size:clamp(2.8rem,7vw,5.6rem);
+  line-height:1.02;letter-spacing:-.025em;max-width:14ch;margin-bottom:1.8rem;
+  opacity:0;animation:rise .9s var(--ease) .22s forwards;
+}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero .lede{
+  font-size:1.18rem;max-width:52ch;color:var(--ink-soft);margin-bottom:2.6rem;
+  opacity:0;animation:rise .9s var(--ease) .36s forwards;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:rise .9s var(--ease) .5s forwards}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;font-weight:600;font-size:.9rem;
+  padding:.95rem 1.7rem;border-radius:2px;transition:all .3s var(--ease);border:1.5px solid var(--ink);
+}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn i{font-size:.8rem;transition:transform .3s var(--ease)}
+.btn:hover i{transform:translateX(3px)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-rule{margin-top:5rem;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);opacity:0;animation:rise .9s var(--ease) .64s forwards}
+.hero-rule div{padding:1.6rem 0;border-right:1px solid var(--line)}
+.hero-rule div:last-child{border-right:none}
+.hero-rule .n{font-family:var(--serif);font-size:2.4rem;font-weight:600;line-height:1}
+.hero-rule .l{font-size:.8rem;color:var(--ink-faint);letter-spacing:.04em;margin-top:.4rem;text-transform:uppercase}
+
+/* section scaffolding */
+section{padding:6rem 0;position:relative}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3.2rem;flex-wrap:wrap}
+.sec-tag{font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.sec-title{font-family:var(--serif);font-weight:600;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.02em;line-height:1.05}
+.sec-desc{max-width:46ch;color:var(--ink-soft);font-size:1.02rem}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:start}
+.about-text p{margin-bottom:1.3rem;color:var(--ink-soft);font-size:1.05rem}
+.about-text p:first-child{font-size:1.2rem;color:var(--ink);font-family:var(--serif);line-height:1.5}
+.focus-list{list-style:none;border-top:1px solid var(--line)}
+.focus-list li{
+  padding:1.1rem 0;border-bottom:1px solid var(--line);display:flex;gap:1rem;align-items:baseline;
+  font-size:.98rem;
+}
+.focus-list .num{font-family:var(--mono);font-size:.78rem;color:var(--accent);min-width:2rem}
+.focus-list strong{font-weight:600}
+
+/* team */
+#team{background:var(--paper-2)}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.member{
+  background:var(--white);border:1px solid var(--line);padding:1.8rem;position:relative;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);display:flex;flex-direction:column;
+}
+.member:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(22,17,13,.1)}
+.member .avatar{
+  width:62px;height:62px;border-radius:50%;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-family:var(--serif);font-size:1.3rem;font-weight:600;margin-bottom:1.3rem;
+}
+.member:nth-child(3n+1) .avatar{background:var(--accent)}
+.member:nth-child(3n+2) .avatar{background:var(--gold);color:var(--ink)}
+.member h3{font-family:var(--serif);font-size:1.22rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.2rem}
+.member .role{font-size:.78rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.member p.bio{font-size:.92rem;color:var(--ink-soft);margin-bottom:1.4rem;flex:1}
+.member .profile-link{
+  font-size:.82rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;color:var(--ink);
+  border-top:1px solid var(--line);padding-top:1rem;transition:color .25s var(--ease);
+}
+.member .profile-link i{transition:transform .3s var(--ease)}
+.member:hover .profile-link{color:var(--accent)}
+.member:hover .profile-link i{transform:translateX(4px)}
+
+/* projects */
+.filters{display:flex;gap:.6rem;margin-bottom:2.6rem;flex-wrap:wrap}
+.filter-btn{
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;
+  padding:.5rem 1.1rem;border:1px solid var(--line);background:transparent;cursor:pointer;
+  color:var(--ink-soft);transition:all .25s var(--ease);border-radius:2px;
+}
+.filter-btn.active,.filter-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.5rem}
+.project{
+  background:var(--white);border:1px solid var(--line);padding:2rem;position:relative;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);overflow:hidden;
+}
+.project::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease)}
+.project:hover::before{transform:scaleY(1)}
+.project:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(22,17,13,.09)}
+.project .status{
+  display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem;
+}
+.status .dot{width:7px;height:7px;border-radius:50%}
+.status.active{color:var(--accent)}.status.active .dot{background:var(--gold)}
+.status.completed{color:var(--ink-faint)}.status.completed .dot{background:var(--ink-faint)}
+.project h3{font-family:var(--serif);font-size:1.18rem;font-weight:600;line-height:1.25;letter-spacing:-.01em;margin-bottom:.8rem}
+.project p{font-size:.93rem;color:var(--ink-soft)}
+
+/* publications */
+#publications{background:var(--paper-2)}
+.pub-search{position:relative;max-width:420px;margin-bottom:2.6rem}
+.pub-search input{
+  width:100%;padding:.9rem 1rem .9rem 2.8rem;border:1px solid var(--line);background:var(--white);
+  font-family:var(--sans);font-size:.95rem;border-radius:2px;transition:border-color .25s var(--ease);
+}
+.pub-search input:focus{outline:none;border-color:var(--accent)}
+.pub-search i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:.9rem}
+.pub{
+  background:var(--white);border:1px solid var(--line);padding:1.7rem 1.9rem;margin-bottom:1rem;
+  display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:start;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.pub:hover{transform:translateX(5px);box-shadow:0 10px 26px rgba(22,17,13,.07)}
+.pub .yr{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--gold);line-height:1}
+.pub h4{font-size:1.04rem;font-weight:600;line-height:1.35;margin-bottom:.5rem}
+.pub .authors{font-size:.9rem;color:var(--ink-soft);font-style:italic;margin-bottom:.25rem}
+.pub .venue{font-size:.85rem;font-family:var(--mono);color:var(--ink-faint)}
+.pub .pub-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--accent);margin-top:.6rem}
+.pub .pub-link:hover{color:var(--gold-deep,#9a7320)}
+
+/* events */
+.events-tabs{display:flex;gap:.6rem;margin-bottom:2.6rem;flex-wrap:wrap}
+.ev-tab{font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;padding:.5rem 1.1rem;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--ink-soft);transition:all .25s var(--ease);border-radius:2px}
+.ev-tab.active,.ev-tab:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.events-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:1.5rem}
+.event{background:var(--white);border:1px solid var(--line);padding:1.9rem;position:relative;display:flex;flex-direction:column;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.event:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(15,27,51,.1)}
+.event-top{display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.event-type{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;background:var(--accent);color:#fff;border-radius:3px}
+.event.past .event-type{background:var(--ink-faint)}
+.event-when-pill{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:var(--gold-deep,#9a7320);font-weight:500}
+.event h3{font-family:var(--serif);font-size:1.28rem;font-weight:600;line-height:1.25;letter-spacing:-.01em;margin-bottom:.5rem}
+.event .speaker{font-size:.92rem;color:var(--ink-soft);font-style:italic;margin-bottom:1.1rem}
+.event-meta{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.2rem;padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.event-meta .row{display:flex;align-items:flex-start;gap:.7rem;font-size:.9rem}
+.event-meta .row i{color:var(--gold);font-size:.85rem;width:1.1rem;text-align:center;margin-top:.18rem}
+.event-topics{margin-bottom:1.4rem}
+.event-topics .lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.5rem}
+.event-topics ul{list-style:none}
+.event-topics li{font-size:.92rem;color:var(--ink-soft);padding:.28rem 0 .28rem 1.1rem;position:relative}
+.event-topics li::before{content:"\2014";position:absolute;left:0;color:var(--gold)}
+.event-cta{margin-top:auto}
+.event-join{display:inline-flex;align-items:center;gap:.55rem;font-weight:600;font-size:.88rem;padding:.75rem 1.4rem;border-radius:4px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);transition:all .3s var(--ease)}
+.event-join:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.event.past .event-join{background:transparent;color:var(--ink);border-color:var(--line)}
+.event.past .event-join:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.events-empty{color:var(--ink-faint);font-size:1rem;padding:2rem 0}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:start}
+.field{margin-bottom:1.3rem}
+.field label{display:block;font-size:.78rem;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
+.field input,.field textarea{
+  width:100%;padding:.85rem 1rem;border:1px solid var(--line);background:var(--white);
+  font-family:var(--sans);font-size:.95rem;border-radius:2px;transition:border-color .25s var(--ease);resize:vertical;
+}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+.contact-meta{display:flex;flex-direction:column;gap:.4rem}
+.cm-item{display:flex;gap:1.1rem;align-items:flex-start;padding:1.4rem 0;border-bottom:1px solid var(--line)}
+.cm-item:first-child{border-top:1px solid var(--line)}
+.cm-item i{color:var(--gold);font-size:1.05rem;margin-top:.25rem;width:1.3rem;text-align:center}
+.cm-item h4{font-size:.8rem;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem}
+.cm-item p{font-size:.98rem;color:var(--ink)}
+
+/* footer */
+footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:relative;z-index:1}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;margin-bottom:3.5rem}
+.foot-brand{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin-bottom:1rem;color:var(--gold-soft)}
+.foot-grid p,.foot-grid a{color:rgba(244,241,234,.65);font-size:.92rem;line-height:1.9}
+.foot-grid a:hover{color:var(--paper)}
+.foot-grid h5{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,241,234,.45);margin-bottom:1rem}
+.socials{display:flex;gap:.7rem;margin-top:1.3rem}
+.socials a{width:38px;height:38px;border:1px solid rgba(244,241,234,.2);border-radius:50%;display:grid;place-items:center;transition:all .3s var(--ease)}
+.socials a:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:translateY(-3px)}
+.foot-bottom{border-top:1px solid rgba(244,241,234,.12);padding-top:2rem;font-size:.85rem;color:rgba(244,241,234,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+/* back to top */
+.totop{position:fixed;bottom:1.8rem;right:1.8rem;width:46px;height:46px;background:var(--ink);color:var(--paper);border:none;border-radius:50%;cursor:pointer;opacity:0;visibility:hidden;transition:all .3s var(--ease);z-index:90}
+.totop.show{opacity:1;visibility:visible}
+.totop:hover{background:var(--gold);color:var(--ink);transform:translateY(-3px)}
+
+/* mobile menu */
+.mobile-menu{position:fixed;inset:0;background:var(--paper);z-index:150;transform:translateX(100%);transition:transform .4s var(--ease);display:flex;flex-direction:column;justify-content:center;padding:2rem}
+.mobile-menu.open{transform:none}
+.mobile-menu a{font-family:var(--serif);font-size:2rem;font-weight:500;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.mobile-menu .close{position:absolute;top:1.6rem;right:2rem;background:none;border:none;font-size:1.8rem;cursor:pointer}
+
+@media(max-width:880px){
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .hero{padding:8rem 0 4rem}
+  .hero-rule{grid-template-columns:1fr;}
+  .hero-rule div{border-right:none;border-bottom:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr}
+  .pub{grid-template-columns:1fr;gap:.6rem}
+  section{padding:4rem 0}
+}
+</style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
+<div class="progress"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <span class="mark"><i class="fas fa-shield-halved"></i></span>
+      Secure Intelligence Lab
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+  </nav>
+</header>
+
+<div class="mobile-menu">
+  <button class="close" aria-label="Close">&times;</button>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#team">Team</a>
+  <a href="#projects">Projects</a>
+  <a href="#events">Events</a>
+  <a href="#publications">Publications</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main>
+<section id="home" class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Crown Institute of Higher Education · School of IT</p>
+    <h1>Securing the digital world with <em>intelligent</em> systems.</h1>
+    <p class="lede">The Secure Intelligence Lab advances cybersecurity research through artificial intelligence and machine learning — protecting critical infrastructure, personal data, and emerging technologies.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">Explore Research <i class="fas fa-arrow-right"></i></a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch <i class="fas fa-arrow-right"></i></a>
     </div>
-
-    <!-- Scroll Progress -->
-    <div class="scroll-progress"></div>
-
-    <header>
-        <nav>
-            <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-                Secure Intelligence Lab
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" onclick="toggleTheme()">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <button class="close-menu" onclick="toggleMobileMenu()">
-            <i class="fas fa-times"></i>
-        </button>
-        <ul class="nav-links">
-            <li><a href="#home" onclick="toggleMobileMenu()">Home</a></li>
-            <li><a href="#about" onclick="toggleMobileMenu()">About</a></li>
-            <li><a href="#team" onclick="toggleMobileMenu()">Team</a></li>
-            <li><a href="#projects" onclick="toggleMobileMenu()">Projects</a></li>
-            <li><a href="#publications" onclick="toggleMobileMenu()">Publications</a></li>
-            <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
-        </ul>
+    <div class="hero-rule">
+      <div><div class="n">5</div><div class="l">Active Projects</div></div>
+      <div><div class="n">3+</div><div class="l">Publications</div></div>
+      <div><div class="n">5</div><div class="l">Researchers</div></div>
     </div>
+  </div>
+</section>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Secure Intelligence Lab</h1>
-                    <p class="subtitle">Crown Institute of Higher Education | School of IT</p>
-                    <p class="description">Advancing cybersecurity research through artificial intelligence and machine learning to protect our digital future</p>
-                    <div class="cta-buttons">
-                        <a href="#projects" class="cta-button">
-                            <i class="fas fa-rocket"></i>
-                            Explore Research
-                        </a>
-                        <a href="#contact" class="cta-button secondary">
-                            <i class="fas fa-envelope"></i>
-                            Get In Touch
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">01 — About</div>
+        <h2 class="sec-title">A research lab built<br>around hard problems.</h2>
+      </div>
+      <p class="sec-desc">Leading cybersecurity innovation through interdisciplinary research and close collaboration with industry and academia.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>The Secure Intelligence Lab is a research group at Crown Institute of Higher Education dedicated to advancing cybersecurity through novel applications of artificial intelligence and machine learning.</p>
+        <p>Our interdisciplinary team of researchers, research assistants, and industry partners works collaboratively to address the most pressing security challenges of the digital age — developing solutions that protect critical infrastructure, personal data, and emerging technologies.</p>
+        <p>We work across threat detection, behavioural analytics, secure communication protocols, and adaptive AI-powered security systems that evolve alongside the threats they defend against.</p>
+      </div>
+      <ul class="focus-list reveal">
+        <li><span class="num">01</span><span><strong>AI-Powered Cybersecurity</strong> — adaptive defence systems</span></li>
+        <li><span class="num">02</span><span><strong>Threat &amp; Intrusion Detection</strong> — IoV, IoMT, networks</span></li>
+        <li><span class="num">03</span><span><strong>Machine &amp; Deep Learning</strong> — explainable models</span></li>
+        <li><span class="num">04</span><span><strong>Blockchain Technology</strong> — privacy-preserving systems</span></li>
+        <li><span class="num">05</span><span><strong>Behavioural Analytics</strong> — keystroke &amp; identity</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        <section id="about" class="loading">
-            <div class="container">
-                <h2 class="section-title">About Our Lab</h2>
-                <p class="section-subtitle">Leading the way in cybersecurity innovation through cutting-edge research and collaboration</p>
-                <div class="about-grid">
-                    <div class="about-text">
-                        <p>The Secure Intelligence Lab is a cutting-edge research facility at Crown Institute of Higher Education, dedicated to advancing the field of cybersecurity through innovative applications of artificial intelligence and machine learning.</p>
-                        <p>Our interdisciplinary team of researchers, research assistants, and industry partners work collaboratively to address the most pressing security challenges of our digital age, developing novel solutions that protect critical infrastructure, personal data, and emerging technologies.</p>
-                        <p>We focus on areas including threat detection, behavioral analytics, secure communication protocols, and AI-powered security systems that adapt to evolving cyber threats.</p>
-                    </div>
-                    <div>
-                        <div class="stats">
-                            <div class="stat">
-                                <h3 data-count="5">0</h3>
-                                <p>Active Projects</p>
-                            </div>
-                            <div class="stat">
-                                <h3 data-count="2+">0</h3>
-                                <p>Publications</p>
-                            </div>
-                            <!-- <div class="stat">
-                                <h3>$XX+</h3>
-                                <p>Research Funding</p>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="team">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">02 — Team</div>
+        <h2 class="sec-title">The people behind<br>the research.</h2>
+      </div>
+      <p class="sec-desc">Meet the researchers driving cybersecurity innovation at the lab. Select any profile for full details.</p>
+    </div>
+    <div class="team-grid">
+      <div class="member reveal">
+        <div class="avatar">RR</div>
+        <h3>Assoc/Prof Reza Rafeh</h3>
+        <div class="role">Director</div>
+        <p class="bio">PhD in Computer Science, Monash University. Expertise in constraint programming and optimization, data and opinion mining, and networking.</p>
+        <a href="profile-reza-rafeh.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">AU</div>
+        <h3>Dr Ashraf Uddin</h3>
+        <div class="role">Research Manager</div>
+        <p class="bio">PhD in IT (Cybersecurity), Federation University Australia. Expertise in blockchain, machine learning, and cybersecurity.</p>
+        <a href="profile-ashraf-uddin.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">NH</div>
+        <h3>Dr Nam Hoai Chu</h3>
+        <div class="role">Senior Researcher</div>
+        <p class="bio">PhD in Advanced Machine Learning for 6G Networks, University of Technology Sydney. Expertise in reinforcement learning, deep learning, and networking.</p>
+        <a href="profile-nam-hoai-chu.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">IH</div>
+        <h3>Dr Md Imran Hossain</h3>
+        <div class="role">Research Associate</div>
+        <p class="bio">PhD (IT), UNSW. Expertise in blockchain and cybersecurity.</p>
+        <a href="profile-imran-hossain.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">MT</div>
+        <h3>Alamin Talukder</h3>
+        <div class="role">Research Fellow</div>
+        <p class="bio">MSc in Computer Science and Engineering, Jagannath University, Bangladesh. Expertise in machine learning, deep learning, and cybersecurity.</p>
+        <a href="profile-alamin-talukder.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section id="team" class="loading">
-            <div class="container">
-                <h2 class="section-title">Our Team</h2>
-                <p class="section-subtitle">Meet the brilliant minds driving cybersecurity innovation</p>
-                <div class="team-grid">
-                    <div class="team-member">
-                        <div class="team-photo">RR</div>
-                        <h3>Assoc/Prof Reza Rafeh</h3>
-                        <p class="role">Director</p>
-                        <p>PhD in Computer Science from Monash University, Melbourne, Australia. Expertise in constraint programming and optimization, data and opinion mining, and networking.</p>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-photo">AU</div>
-                        <h3>Dr Ashraf Uddin</h3>
-                        <p class="role">Research Manager</p>
-                        <p>PhD in IT(Cybersecurity) from Federation University Australia. Expertise in blockchain, machine learning and cybersecurity.</p>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-photo">NH</div>
-                        <h3>Dr Nam Hoai Chu</h3>
-                        <p class="role">Senior Researcher</p>
-                        <p>PhD in Advanced Machine Learning for 6G Networks from University of Technology Sydney. Expertise in reinforcement learning, deep learning and networking.</p>
-                    </div>
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">03 — Projects</div>
+        <h2 class="sec-title">Current research<br>projects.</h2>
+      </div>
+      <p class="sec-desc">Innovative projects tackling tomorrow's security challenges across health, mobility, and finance.</p>
+    </div>
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+    <div class="projects">
+      <div class="project reveal" data-status="active">
+        <div class="status active"><span class="dot"></span>Active</div>
+        <h3>Hierarchical IDS for Zero-Day Attack Detection in IoMT</h3>
+        <p>A hierarchical intrusion detection system to detect zero-day attacks in the Internet of Medical Things using advanced machine learning techniques.</p>
+      </div>
+      <div class="project reveal" data-status="active">
+        <div class="status active"><span class="dot"></span>Active</div>
+        <h3>Zero-Knowledge Proofs for Pharmaceutical Traceability</h3>
+        <p>A blockchain-supported pharmaceutical traceability and recall platform designed for the Australian Capital Territory (ACT) public health context.</p>
+      </div>
+      <div class="project reveal" data-status="active">
+        <div class="status active"><span class="dot"></span>Active</div>
+        <h3>Explainable Hierarchical Model for Lung &amp; Colon Cancer Detection</h3>
+        <p>An explainable hierarchical deep-learning framework that decomposes diagnosis into clinically meaningful stages, emulating the stepwise reasoning of pathologists.</p>
+      </div>
+      <div class="project reveal" data-status="active">
+        <div class="status active"><span class="dot"></span>Active</div>
+        <h3>Keystroke Dynamics–Based Authentication</h3>
+        <p>A hybrid machine-learning authentication framework that leverages keystroke dynamics to verify user identity and detect imposters.</p>
+      </div>
+      <div class="project reveal" data-status="active">
+        <div class="status active"><span class="dot"></span>Active</div>
+        <h3>Graph-Based Semi-Supervised Detection of Illicit Bitcoin</h3>
+        <p>A framework addressing the labeling challenge while comparing classical ML, ensemble, deep learning, and graph neural network approaches for detecting illicit Bitcoin transactions.</p>
+      </div>
+      <div class="project reveal" data-status="completed">
+        <div class="status completed"><span class="dot"></span>Completed</div>
+        <h3>Scalable Hierarchical Intrusion Detection for IoV</h3>
+        <p>Hierarchical classification to detect cyberattacks from network traffic in the Internet of Vehicles, achieving 99.2% accuracy.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <div class="team-member">
-                        <div class="team-photo">IH</div>
-                        <h3>Dr Md Imran Hossain</h3>
-                        <p class="role">Research Associate</p>
-                        <p>PhD(IT), UNSW, Expertise in blockchain and cybersecurity.</p>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="team-photo">MT</div>
-                        <h3>Alamin Talukder</h3>
-                        <p class="role">Research Fellow</p>
-                        <p>MSc in Computer Science and Engineering from Jagannath University, Bangladesh. Expertise in machine learning, deep learning and cybersecurity.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="events">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">04 — Events</div>
+        <h2 class="sec-title">Workshops, webinars<br>&amp; guest lectures.</h2>
+      </div>
+      <p class="sec-desc">Talks and training from the lab — upcoming sessions and past highlights. Join links appear on each event.</p>
+    </div>
+    <div class="events-tabs reveal">
+      <button class="ev-tab active" data-evfilter="upcoming">Upcoming</button>
+      <button class="ev-tab" data-evfilter="past">Past</button>
+      <button class="ev-tab" data-evfilter="all">All</button>
+    </div>
+    <div class="events-list" id="eventsList"></div>
+  </div>
+</section>
 
-        <section id="projects" class="loading">
-            <div class="container">
-                <h2 class="section-title">Current Projects</h2>
-                <p class="section-subtitle">Innovative research projects tackling tomorrow's security challenges</p>
-                
-                <div class="projects-filters">
-                    <button class="filter-btn active" data-filter="all">All Projects</button>
-                    <button class="filter-btn" data-filter="active">Active</button>
-                    <button class="filter-btn" data-filter="completed">Completed</button>
-                </div>
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">05 — Publications</div>
+        <h2 class="sec-title">Recent publications.</h2>
+      </div>
+      <p class="sec-desc">Our latest contributions to the cybersecurity research community.</p>
+    </div>
+    <div class="pub-search reveal">
+      <i class="fas fa-search"></i>
+      <input type="text" id="pubSearch" placeholder="Search publications…">
+    </div>
+    <div class="pub-list" id="pubList"></div>
+  </div>
+</section>
 
-                <div class="projects-grid">
-                    <div class="project" data-status="active">
-                        <h3>Hierarchical IDS for Zero-Day Attack Detection in IoMT</h3>
-                        <p>Developing a hierarchical IDS to detect zero day attacks in Internet of Medical Things using advanced machine learning techniques.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div>
-                    </div>
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-tag">06 — Contact</div>
+        <h2 class="sec-title">Let's collaborate.</h2>
+      </div>
+      <p class="sec-desc">We welcome partnerships with industry, academia, and government. Reach out and tell us what you're working on.</p>
+    </div>
+    <div class="contact-grid">
+      <form id="contactForm" class="reveal">
+        <div class="field"><label for="name">Name</label><input type="text" id="name" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" required></div>
+        <div class="field"><label for="subject">Subject</label><input type="text" id="subject" required></div>
+        <div class="field"><label for="message">Message</label><textarea id="message" rows="5" required></textarea></div>
+        <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+      </form>
+      <div class="contact-meta reveal">
+        <div class="cm-item"><i class="fas fa-location-dot"></i><div><h4>Address</h4><p>School of IT, Crown Institute of Higher Education, Sydney, Australia</p></div></div>
+        <div class="cm-item"><i class="fas fa-envelope"></i><div><h4>Email</h4><p>ashraf.uddin@cihe.edu.au</p></div></div>
+        <div class="cm-item"><i class="fas fa-phone"></i><div><h4>Phone</h4><p>+61 02 9955 0488</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 
-                    
-                    <div class="project" data-status="active">
-                        <h3>Zero-Knowledge Proofs Based Privacy-Preserving Pharmaceutical Traceability and Recall Using Blockchain</h3>
-                        <p>Developing a blockchain-supported pharmaceutical traceability and recall platform designed for the Australian Capital Territory (ACT) public health context.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="project" data-status="active">
-                        <h3>An Explainable Hierarchical Model for Lung and Colon Cancer Detection</h3>
-                        <p>Presenting an explainable hierarchical DL framework that decomposes the diagnostic process into clinically meaningful decision stages, emulating the stepwise reasoning employed by pathologists.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="project" data-status="active">
-                        <h3>Enhancing Authentication Security and Usability Through Keystroke Dynamics–Based Machine Learning</h3>
-                        <p>Developing a hybrid machine learning–based authentication framework that leverages keystroke dynamics to verify user identity and detect imposters.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="project" data-status="active">
-                        <h3>A Graph-Based Semi-Supervised Learning Framework for Illicit Bitcoin Transaction Detection</h3>
-                        <p>This paper proposes a comprehensive framework that tackles the labeling challenge and systematically compares classical machine learning, ensemble, deep learning, and graph neural network approaches for detecting illicit Bitcoin transactions.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="project" data-status="completed">
-                        <h3>Scalable Hierarchical Intrusion Detection System for IoV</h3>
-                        <p>Developed hierarchical classification to detect cyberattacks from network traffics in Internet of Vehicles with 99.2% accuracy.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-completed">
-                                <i class="fas fa-check-circle"></i>
-                                Completed
-                            </span>
-                        </div>
-                    </div>
-                    <!-- <div class="project" data-status="active">
-                        <h3>AI-Powered Threat Intelligence Platform</h3>
-                        <p>Building an advanced threat intelligence system that uses machine learning to predict and prevent cyber attacks in real-time.</p>
-                        <div class="project-meta">
-                            <span class="project-status status-active">
-                                <i class="fas fa-circle"></i>
-                                Active
-                            </span>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="publications" class="loading">
-            <div class="container">
-                <h2 class="section-title">Recent Publications</h2>
-                <p class="section-subtitle">Our latest research contributions to the cybersecurity community</p>
-                
-                <div class="publications-search">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search publications..." id="publicationSearch">
-                </div>
-
-                <div class="publications-list">
-                    <div class="publication">
-                        <h4>"A Scalable Hierarchical Intrusion Detection System for Internet of Vehicles"</h4>
-                        <p class="publication-authors">Uddin, M. A., Chu, N. H., Rafeh, R., & Barika, M.</p>
-                        <p class="publication-venue">Accepted at IEEE Internet of Things Journal, IEEE, 2025</p>
-                    </div>
-                    <div class="publication">
-                        <h4>"A Zero-Knowledge Proof-Enabled Blockchain-Based Academic Record Verification System"</h4>
-                        <p class="publication-authors">Berrios Moya, J. A., Ayoade, J., & Uddin, M. A. (2025).</p>
-                        <p class="publication-venue">Sensors, 25(11), 3450.</p>
-                    </div>
-
-                    <div class="publication">
-                        <h4>"Zero-Knowledge Proof-Based Privacy-Preserving Pharmaceutical Traceability and Recall Using Blockchain"</h4>
-                        <p class="publication-authors">Sitaula, A., Uddin, M. A., Ayoade, J., Chu, N. H., & Rafeh, R. </p>
-                        <p class="publication-venue">Blockchains, 2026</p>
-                    </div>
-                    
-                    <!-- <div class="publication">
-                        <h4>"Reinforcement Learning for Dynamic Security Policy Adaptation in IoT Networks"</h4>
-                        <p class="publication-authors">Chu, N. H., Uddin, M. A., & Rafeh, R.</p>
-                        <p class="publication-venue">Journal of Network and Computer Applications, 2024</p>
-                    </div>
-                    <div class="publication">
-                        <h4>"Blockchain-Based Secure Authentication Framework for Medical IoT Devices"</h4>
-                        <p class="publication-authors">Uddin, M. A., Rafeh, R., Chu, N. H., & Talukder, M. A.</p>
-                        <p class="publication-venue">IEEE Internet of Things Journal, 2023</p>
-                    </div> -->
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="loading">
-            <div class="container">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Ready to collaborate? We'd love to hear from you</p>
-                
-                <div class="contact-grid">
-                    <div class="contact-form">
-                        <h3>Send us a Message</h3>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" class="form-control" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i>
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <h4>Address</h4>
-                                <p>School of IT<br>Crown Institute of Higher Education<br>Sydney, Australia</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4>Email</h4>
-                                <p>ashraf.uddin@cihe.edu</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+61 0299550488</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Secure Intelligence Lab</h3>
-                    <p>Advancing cybersecurity research through artificial intelligence and machine learning.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/school/crown-institute-of-higher-education/posts/?feedView=all" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Research Areas</h3>
-                    <p>• AI-Powered Cybersecurity<br>
-                    • Threat Intelligence<br>
-                    • Machine Learning<br>
-                    • Deep Learning<br>
-                    • IoT Security<br>
-                    • Blockchain Technology</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <p>
-                        <a href="https://www.cihe.edu.au/">About Us</a><br>
-                        <a href="#team">Our Team</a><br>
-                        <a href="#projects">Projects</a><br>
-                        <a href="#publications">Publications</a><br>
-                        <a href="#contact">Contact</a>
-                    </p>
-                </div>
-                <div class="footer-section">
-                    <h3>Collaboration</h3>
-                    <p>Interested in collaboration? We welcome partnerships with industry, academia, and government organizations.</p>
-                    <p><strong>ashraf.uddin@cihe.edu</strong></p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Secure Intelligence Lab, Crown Institute of Higher Education. All rights reserved.</p>
-            </div>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Secure Intelligence Lab</div>
+        <p>Advancing cybersecurity research through artificial intelligence and machine learning at Crown Institute of Higher Education.</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/school/crown-institute-of-higher-education/posts/?feedView=all" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
-    </footer>
+      </div>
+      <div>
+        <h5>Research Areas</h5>
+        <p>AI-Powered Cybersecurity<br>Threat Intelligence<br>Machine &amp; Deep Learning<br>IoT Security<br>Blockchain Technology</p>
+      </div>
+      <div>
+        <h5>Navigate</h5>
+        <p><a href="https://www.cihe.edu.au/">About CIHE</a><br><a href="#team">Our Team</a><br><a href="#projects">Projects</a><br><a href="#events">Events</a><br><a href="#publications">Publications</a><br><a href="#contact">Contact</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 Secure Intelligence Lab, Crown Institute of Higher Education.</span>
+      <span>ashraf.uddin@cihe.edu.au</span>
+    </div>
+  </div>
+</footer>
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+<button class="totop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+<script src="data-publications.js"></script>
+<script src="data-events.js"></script>
+<script>
+const header=document.querySelector('header');
+const progress=document.querySelector('.progress');
+const totop=document.querySelector('.totop');
+const navLinks=document.querySelectorAll('.nav-links a');
+const sections=document.querySelectorAll('section');
 
-        // Active navigation
-        function updateActiveNav() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                if (sectionTop <= 100) {
-                    current = section.getAttribute('id');
-                }
-            });
+function onScroll(){
+  const y=window.scrollY;
+  header.classList.toggle('scrolled',y>20);
+  totop.classList.toggle('show',y>400);
+  const h=document.body.scrollHeight-window.innerHeight;
+  progress.style.width=(y/h*100)+'%';
+  let cur='';
+  sections.forEach(s=>{if(s.getBoundingClientRect().top<=120)cur=s.id});
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',onScroll);onScroll();
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        }
+totop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-        // Scroll progress bar
-        function updateScrollProgress() {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.body.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
-        }
+// reveal on scroll
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*0.06)+'s';io.observe(el)});
 
-        // Back to top button
-        function toggleBackToTop() {
-            const backToTop = document.querySelector('.back-to-top');
-            if (window.pageYOffset > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        }
+// project filter
+const fbtns=document.querySelectorAll('.filter-btn');
+const projects=document.querySelectorAll('.project');
+fbtns.forEach(b=>b.addEventListener('click',()=>{
+  fbtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  const f=b.dataset.filter;
+  projects.forEach(p=>{
+    const show=f==='all'||p.dataset.status===f;
+    p.style.display=show?'':'none';
+  });
+}));
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+// ---- helpers ----
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-        // Header background change on scroll
-        function updateHeader() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        }
+// ---- render publications from data-publications.js ----
+const pubList=document.getElementById('pubList');
+function renderPubs(){
+  const data=(typeof PUBLICATIONS!=='undefined')?PUBLICATIONS:[];
+  pubList.innerHTML=data.map(p=>{
+    const link=p.link?`<a class="pub-link" href="${esc(p.link)}" target="_blank" rel="noopener">Read paper <i class="fas fa-arrow-up-right-from-square"></i></a>`:'';
+    return `<div class="pub reveal">
+      <div class="yr">${esc(p.year)}</div>
+      <div>
+        <h4>${esc(p.title)}</h4>
+        <p class="authors">${esc(p.authors)}</p>
+        <p class="venue">${esc(p.venue)}</p>
+        ${link}
+      </div>
+    </div>`;
+  }).join('')||'<p class="events-empty">No publications listed yet.</p>';
+}
+renderPubs();
 
-        // Animated counters
-        function animateCounters() {
-            const counters = document.querySelectorAll('[data-count]');
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const count = parseInt(counter.innerText);
-                const increment = target / 100;
-                
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(() => animateCounters(), 20);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
+// publication search
+const ps=document.getElementById('pubSearch');
+ps.addEventListener('input',e=>{
+  const t=e.target.value.toLowerCase();
+  document.querySelectorAll('#pubList .pub').forEach(p=>{p.style.display=p.textContent.toLowerCase().includes(t)?'':'none';});
+});
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+// ---- render events from data-events.js ----
+const eventsList=document.getElementById('eventsList');
+function fmtDate(iso){
+  const d=new Date(iso+'T00:00:00');
+  if(isNaN(d)) return iso;
+  return d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+}
+function buildEvent(ev,isPast){
+  const topics=(ev.topics&&ev.topics.length)?
+    `<div class="event-topics"><div class="lbl">Topics</div><ul>${ev.topics.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:'';
+  const meta=[
+    `<div class="row"><i class="fas fa-calendar-day"></i><span>${esc(fmtDate(ev.date))}</span></div>`,
+    ev.time?`<div class="row"><i class="fas fa-clock"></i><span>${esc(ev.time)}</span></div>`:'',
+    ev.location?`<div class="row"><i class="fas fa-location-dot"></i><span>${esc(ev.location)}</span></div>`:'',
+    ev.speaker?`<div class="row"><i class="fas fa-user"></i><span>${esc(ev.speaker)}</span></div>`:''
+  ].join('');
+  let cta='';
+  if(ev.link){
+    const label=ev.linkText||(isPast?'View Recording':'Join');
+    const icon=isPast?'fa-arrow-up-right-from-square':'fa-video';
+    cta=`<div class="event-cta"><a class="event-join" href="${esc(ev.link)}" target="_blank" rel="noopener"><i class="fas ${icon}"></i>${esc(label)}</a></div>`;
+  }
+  const pill=isPast?'Past event':'Upcoming';
+  return `<div class="event ${isPast?'past':'upcoming'} reveal" data-ev="${isPast?'past':'upcoming'}">
+    <div class="event-top">
+      <span class="event-type">${esc(ev.type||'Event')}</span>
+      <span class="event-when-pill">${pill}</span>
+    </div>
+    <h3>${esc(ev.title)}</h3>
+    ${ev.speaker?`<p class="speaker">${esc(ev.speaker)}</p>`:''}
+    <div class="event-meta">${meta}</div>
+    ${topics}
+    ${cta}
+  </div>`;
+}
+function renderEvents(filter){
+  const data=(typeof EVENTS!=='undefined')?EVENTS.slice():[];
+  const today=new Date(); today.setHours(0,0,0,0);
+  const withPast=data.map(ev=>({ev,past:(new Date(ev.date+'T00:00:00'))<today}));
+  // upcoming sorted soonest-first; past sorted most-recent-first
+  const up=withPast.filter(x=>!x.past).sort((a,b)=>new Date(a.ev.date)-new Date(b.ev.date));
+  const pa=withPast.filter(x=>x.past).sort((a,b)=>new Date(b.ev.date)-new Date(a.ev.date));
+  let show=[];
+  if(filter==='upcoming') show=up;
+  else if(filter==='past') show=pa;
+  else show=up.concat(pa);
+  if(!show.length){
+    const msg=filter==='upcoming'?'No upcoming events right now — check back soon.':filter==='past'?'No past events listed yet.':'No events listed yet.';
+    eventsList.innerHTML=`<p class="events-empty">${msg}</p>`;
+    return;
+  }
+  eventsList.innerHTML=show.map(x=>buildEvent(x.ev,x.past)).join('');
+  // re-observe newly added cards for reveal animation
+  eventsList.querySelectorAll('.reveal').forEach(el=>{el.classList.add('in');});
+}
+renderEvents('upcoming');
+document.querySelectorAll('.ev-tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.ev-tab').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  renderEvents(b.dataset.evfilter);
+}));
+// make dynamically-rendered publications visible (reveal)
+pubList.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('loaded');
-                    
-                    // Trigger counter animation for stats section
-                    if (entry.target.id === 'about') {
-                        setTimeout(animateCounters, 500);
-                    }
-                }
-            });
-        }, observerOptions);
+// contact form -> mailto
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=name.value,em=email.value,s=subject.value,m=message.value;
+  window.location.href=`mailto:ashraf.uddin@cihe.edu.au?subject=${encodeURIComponent(s)}&body=${encodeURIComponent(`From: ${n} (${em})\n\nMessage:\n${m}`)}`;
+  e.target.reset();
+});
 
-        // Observe all sections with loading class
-        document.querySelectorAll('.loading').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.mobile-menu');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        // Theme toggle
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const themeToggle = document.querySelector('.theme-toggle i');
-            if (document.body.classList.contains('dark-theme')) {
-                themeToggle.className = 'fas fa-sun';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeToggle.className = 'fas fa-moon';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Load saved theme
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
-            }
-        }
-
-        // Project filters
-        function initProjectFilters() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const projects = document.querySelectorAll('.project');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Update active filter
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.getAttribute('data-filter');
-
-                    // Filter projects
-                    projects.forEach(project => {
-                        if (filter === 'all' || project.getAttribute('data-status') === filter) {
-                            project.style.display = 'block';
-                            setTimeout(() => {
-                                project.style.opacity = '1';
-                                project.style.transform = 'translateY(0)';
-                            }, 10);
-                        } else {
-                            project.style.opacity = '0';
-                            project.style.transform = 'translateY(20px)';
-                            setTimeout(() => {
-                                project.style.display = 'none';
-                            }, 300);
-                        }
-                    });
-                });
-            });
-        }
-
-        // Publications search
-        function initPublicationsSearch() {
-            const searchInput = document.getElementById('publicationSearch');
-            const publications = document.querySelectorAll('.publication');
-
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-
-                publications.forEach(pub => {
-                    const title = pub.querySelector('h4').textContent.toLowerCase();
-                    const authors = pub.querySelector('.publication-authors').textContent.toLowerCase();
-                    const venue = pub.querySelector('.publication-venue').textContent.toLowerCase();
-
-                    if (title.includes(searchTerm) || authors.includes(searchTerm) || venue.includes(searchTerm)) {
-                        pub.style.display = 'block';
-                    } else {
-                        pub.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        // Contact form
-        // function initContactForm() {
-        //     const form = document.getElementById('contactForm');
-        //     form.addEventListener('submit', (e) => {
-        //         e.preventDefault();
-                
-        //         // Get form data
-        //         const formData = new FormData(form);
-        //         const data = Object.fromEntries(formData);
-                
-        //         // Simulate form submission
-        //         const submitBtn = form.querySelector('.submit-btn');
-        //         const originalText = submitBtn.innerHTML;
-                
-        //         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        //         submitBtn.disabled = true;
-                
-        //         setTimeout(() => {
-        //             submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-        //             setTimeout(() => {
-        //                 submitBtn.innerHTML = originalText;
-        //                 submitBtn.disabled = false;
-        //                 form.reset();
-        //             }, 2000);
-        //         }, 2000);
-        //     });
-        // }
-
-
-        function initContactForm() {
-                const form = document.getElementById('contactForm');
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    const name = document.getElementById('name').value;
-                    const email = document.getElementById('email').value;
-                    const subject = document.getElementById('subject').value;
-                    const message = document.getElementById('message').value;
-                    
-                    const mailtoLink = `mailto:ashraf.uddin@cihe.edu.au?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\nMessage:\n${message}`)}`;
-                    
-                    window.location.href = mailtoLink;
-                    form.reset();
-                });
-            }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTheme();
-            initProjectFilters();
-            initPublicationsSearch();
-            initContactForm();
-        });
-
-        // Scroll event listeners
-        window.addEventListener('scroll', () => {
-            updateActiveNav();
-            updateScrollProgress();
-            toggleBackToTop();
-            updateHeader();
-        });
-
-        // Initial calls
-        updateActiveNav();
-        updateScrollProgress();
-    </script>
+// mobile menu
+const mm=document.querySelector('.mobile-menu');
+document.querySelector('.menu-btn').addEventListener('click',()=>mm.classList.add('open'));
+document.querySelector('.mobile-menu .close').addEventListener('click',()=>mm.classList.remove('open'));
+document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+</script>
 </body>
 </html>
-
-

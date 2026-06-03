@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr Ashraf Uddin — Secure Intelligence Lab</title>
+<meta name="description" content="Manages the lab&#x27;s research portfolio with a focus on blockchain, machine learning, and applied cybersecurity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f3ee;--paper-2:#ebe7de;--ink:#0f1b33;--ink-soft:#42506b;--ink-faint:#8a93a6;
+  --accent:#14264f;--accent-deep:#0a1830;--gold:#c79a3a;--gold-soft:#e6c878;--gold-deep:#9a7320;--line:#d8d3c7;--white:#fffefb;
+  --serif:"Fraunces",Georgia,serif;--sans:"Archivo","Segoe UI",sans-serif;--mono:"JetBrains Mono",monospace;
+  --maxw:1000px;--ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:var(--white)}
+a{color:inherit;text-decoration:none}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+header{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(245,243,238,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);border-top:3px solid var(--gold)}
+nav{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:1.1rem 2rem}
+.brand{display:flex;align-items:center;gap:.85rem;font-family:var(--serif);font-weight:700;font-size:1.55rem;letter-spacing:-.015em}
+.brand .mark{width:42px;height:42px;border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-size:1.05rem;background:var(--ink);color:var(--gold-soft)}
+.back-link{font-size:.95rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;color:var(--ink);padding:.5rem .9rem;border:1px solid var(--line);border-radius:6px;transition:all .25s var(--ease)}
+.back-link i{transition:transform .3s var(--ease)}
+.back-link:hover{color:#fff;background:var(--accent);border-color:var(--accent)}
+.back-link:hover i{transform:translateX(-4px)}
+
+.profile-hero{padding:9rem 0 3rem}
+.crumb{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:2rem;opacity:0;animation:rise .7s var(--ease) .1s forwards}
+.crumb a{color:var(--ink-faint)}.crumb a:hover{color:var(--ink)}
+.phead{display:grid;grid-template-columns:auto 1fr;gap:2.4rem;align-items:center}
+.pavatar{width:130px;height:130px;border-radius:50%;background:var(--accent);color:var(--paper);display:grid;place-items:center;font-family:var(--serif);font-size:3rem;font-weight:600;opacity:0;animation:rise .8s var(--ease) .2s forwards}
+.pinfo{opacity:0;animation:rise .8s var(--ease) .32s forwards}
+.pinfo .role{font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.6rem}
+.pinfo h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5vw,3.4rem);letter-spacing:-.02em;line-height:1.05;margin-bottom:.8rem}
+.pinfo .tagline{font-size:1.08rem;color:var(--ink-soft);max-width:50ch}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.pbody{padding:2rem 0 5rem}
+.pgrid{display:grid;grid-template-columns:1.7fr 1fr;gap:3.5rem;align-items:start;margin-top:2rem}
+.block{margin-bottom:2.6rem}
+.block h2{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.01em;margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+.block h2::before{content:"";width:24px;height:2px;background:var(--gold)}
+.block p{color:var(--ink-soft);margin-bottom:1rem;font-size:1.04rem}
+.block ul{list-style:none}
+.block ul li{padding:.7rem 0;border-bottom:1px solid var(--line);display:flex;gap:.8rem;align-items:baseline;font-size:.98rem}
+.block ul li i{color:var(--gold);font-size:.8rem}
+
+.side{background:var(--white);border:1px solid var(--line);padding:1.8rem}
+.side h3{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.2rem}
+.side .row{padding:.85rem 0;border-bottom:1px solid var(--line)}
+.side .row:last-child{border-bottom:none}
+.side .row .k{font-size:.75rem;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.25rem}
+.side .row .v{font-size:.98rem;color:var(--ink)}
+.side .row .v a{color:var(--accent);word-break:break-word}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
+.tag{font-family:var(--mono);font-size:.72rem;padding:.3rem .7rem;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft)}
+
+footer{background:var(--ink);color:var(--paper);padding:3rem 0;position:relative;z-index:1;text-align:center;font-size:.85rem;color:rgba(244,241,234,.55)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+footer a{color:rgba(244,241,234,.55)}footer a:hover{color:var(--paper)}
+
+@media(max-width:760px){
+  .phead{grid-template-columns:1fr;text-align:center;gap:1.4rem}
+  .pavatar{margin:0 auto}
+  .pinfo .tagline{margin:0 auto}
+  .pgrid{grid-template-columns:1fr;gap:2.2rem}
+  .back-link span{display:none}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="mark"><i class="fas fa-shield-halved"></i></span>Secure Intelligence Lab</a>
+    <a href="index.html#team" class="back-link"><i class="fas fa-arrow-left"></i><span>Back to Team</span></a>
+  </nav>
+</header>
+
+<section class="profile-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="index.html#team">Team</a> / Ashraf Uddin</div>
+    <div class="phead">
+      <div class="pavatar">AU</div>
+      <div class="pinfo">
+        <div class="role">Research Manager</div>
+        <h1>Dr Ashraf Uddin</h1>
+        <p class="tagline">Manages the lab&#x27;s research portfolio with a focus on blockchain, machine learning, and applied cybersecurity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pbody">
+  <div class="wrap">
+    <div class="pgrid">
+      <div class="pmain">
+        <div class="block">
+          <h2>Biography</h2>
+          <p>Dr Ashraf Uddin is the Research Manager of the Secure Intelligence Lab. He earned his PhD in IT (Cybersecurity) from Federation University Australia.</p>
+          <p>His work bridges blockchain technology, machine learning, and cybersecurity, with recent contributions to intrusion detection for the Internet of Vehicles and privacy-preserving blockchain systems for healthcare and academic records.</p>
+        </div>
+        <div class="block">
+          <h2>Research Interests</h2>
+          <ul>
+            <li><i class="fas fa-circle"></i><span>Blockchain and distributed ledger technology</span></li>
+            <li><i class="fas fa-circle"></i><span>Machine learning for security</span></li>
+            <li><i class="fas fa-circle"></i><span>Intrusion detection systems</span></li>
+            <li><i class="fas fa-circle"></i><span>Privacy-preserving systems and zero-knowledge proofs</span></li>
+          </ul>
+        </div>
+        <div class="block">
+          <h2>Role in the Lab</h2>
+          <p>As Research Manager, Ashraf coordinates the lab's active projects, manages collaborations, and serves as the primary point of contact for partnership enquiries.</p>
+        </div>
+      </div>
+      <aside>
+        <div class="side">
+          <h3>At a Glance</h3>
+          <div class="row"><div class="k">Role</div><div class="v">Research Manager</div></div>
+          <div class="row"><div class="k">Highest Degree</div><div class="v">PhD, IT (Cybersecurity)</div></div>
+          <div class="row"><div class="k">Institution</div><div class="v">Federation University Australia</div></div>
+          <div class="row"><div class="k">Contact</div><div class="v"><a href="mailto:ashraf.uddin@cihe.edu.au">ashraf.uddin@cihe.edu.au</a></div></div>
+          <div class="row"><div class="k">Expertise</div><div class="v"><div class="tags"><span class="tag">Blockchain</span><span class="tag">Machine Learning</span><span class="tag">Cybersecurity</span><span class="tag">Intrusion Detection</span><span class="tag">Zero-Knowledge Proofs</span></div></div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2025 Secure Intelligence Lab, Crown Institute of Higher Education.</span>
+    <span><a href="index.html#contact">Contact</a> · <a href="mailto:ashraf.uddin@cihe.edu.au">ashraf.uddin@cihe.edu.au</a></span>
+  </div>
+</footer>
+</body>
+</html>
