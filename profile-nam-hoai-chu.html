@@ -64,6 +64,19 @@ nav{display:flex;align-items:center;justify-content:space-between;max-width:1180
 .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
 .tag{font-family:var(--mono);font-size:.72rem;padding:.3rem .7rem;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft)}
 
+.side+.side{margin-top:1.2rem}
+.rp-list{display:flex;flex-direction:column;gap:.6rem}
+.rp-btn{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;border:1px solid var(--line);border-radius:6px;font-size:.9rem;font-weight:600;color:var(--ink);transition:all .25s var(--ease);background:var(--white)}
+.rp-btn i{font-size:1.05rem;width:1.3rem;text-align:center}
+.rp-btn .rp-go{margin-left:auto;font-size:.78rem;color:var(--ink-faint);font-weight:500;transition:transform .25s var(--ease)}
+.rp-btn:hover{border-color:var(--accent);background:var(--accent);color:#fff}
+.rp-btn:hover .rp-go{color:rgba(255,255,255,.85);transform:translateX(3px)}
+.rp-scholar:hover{background:#4285F4;border-color:#4285F4}
+.rp-orcid:hover{background:#A6CE39;border-color:#A6CE39;color:var(--ink)}
+.rp-orcid:hover .rp-go{color:var(--ink)}
+.rp-scopus:hover{background:#E9711C;border-color:#E9711C}
+.rp-scholar i{color:#4285F4}.rp-orcid i{color:#A6CE39}.rp-scopus i{color:#E9711C}
+.rp-btn:hover i{color:inherit}
 footer{background:var(--ink);color:var(--paper);padding:3rem 0;position:relative;z-index:1;text-align:center;font-size:.85rem;color:rgba(244,241,234,.55)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 footer a{color:rgba(244,241,234,.55)}footer a:hover{color:var(--paper)}
@@ -79,6 +92,22 @@ footer a{color:rgba(244,241,234,.55)}footer a:hover{color:var(--paper)}
 </style>
 </head>
 <body>
+<!-- =====================================================================
+     RESEARCH PROFILE LINKS — edit the URLs below for this person.
+     Paste the full link between the quotes. Leave "" to hide that button.
+       scholar : Google Scholar profile URL
+       orcid   : ORCID profile URL
+       scopus  : Scopus Author profile URL
+     Save and refresh. (Example: scholar: "https://scholar.google.com/citations?user=XXXX")
+     ===================================================================== -->
+<script>
+const RESEARCH_PROFILES = {
+  scholar: "",
+  orcid:   "",
+  scopus:  ""
+};
+</script>
+
 <header>
   <nav>
     <a href="index.html" class="brand"><span class="mark"><i class="fas fa-shield-halved"></i></span>Secure Intelligence Lab</a>
@@ -132,6 +161,10 @@ footer a{color:rgba(244,241,234,.55)}footer a:hover{color:var(--paper)}
           <div class="row"><div class="k">Contact</div><div class="v"><a href="mailto:ashraf.uddin@cihe.edu.au">ashraf.uddin@cihe.edu.au</a></div></div>
           <div class="row"><div class="k">Expertise</div><div class="v"><div class="tags"><span class="tag">Reinforcement Learning</span><span class="tag">Deep Learning</span><span class="tag">6G Networks</span><span class="tag">Networking</span></div></div></div>
         </div>
+        <div class="side" id="researchProfiles" style="display:none">
+          <h3>Research Profiles</h3>
+          <div class="rp-list" id="rpList"></div>
+        </div>
       </aside>
     </div>
   </div>
@@ -143,5 +176,25 @@ footer a{color:rgba(244,241,234,.55)}footer a:hover{color:var(--paper)}
     <span><a href="index.html#contact">Contact</a> · <a href="mailto:ashraf.uddin@cihe.edu.au">ashraf.uddin@cihe.edu.au</a></span>
   </div>
 </footer>
+<script>
+(function(){
+  var rp=(typeof RESEARCH_PROFILES!=='undefined')?RESEARCH_PROFILES:{};
+  var defs=[
+    {key:'scholar', cls:'rp-scholar', icon:'fas fa-graduation-cap', label:'Google Scholar'},
+    {key:'orcid',   cls:'rp-orcid',   icon:'fab fa-orcid',          label:'ORCID'},
+    {key:'scopus',  cls:'rp-scopus',  icon:'fas fa-database',       label:'Scopus'}
+  ];
+  var list=document.getElementById('rpList');
+  var html='';
+  defs.forEach(function(d){
+    var url=rp[d.key];
+    if(url && url.trim()){
+      html+='<a class="rp-btn '+d.cls+'" href="'+url+'" target="_blank" rel="noopener">'+
+            '<i class="'+d.icon+'"></i>'+d.label+'<span class="rp-go">View &rarr;</span></a>';
+    }
+  });
+  if(html){ list.innerHTML=html; document.getElementById('researchProfiles').style.display=''; }
+})();
+</script>
 </body>
 </html>
