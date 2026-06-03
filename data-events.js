@@ -30,15 +30,15 @@
 
 const EVENTS = [
   {
-    type: "Webinar",
-    title: "Adversarial Machine Learning in Intrusion Detection",
+    type: "Topics Lecture",
+    title: "Fundamentals and Research in Blockchain",
     speaker: "Dr Ashraf Uddin, Secure Intelligence Lab",
-    date: "2026-07-15",
-    time: "2:00 \u2013 3:30 PM AEST",
-    location: "Online (Zoom)",
+    date: "2026-07-31",
+    time: "11:30 \u2013 12:30 PM AEST",
+    location: "Online (Team)",
     topics: [
-      "How attackers evade ML-based intrusion detection systems",
-      "Defensive techniques and robust model design",
+      "Basic of Blockchain Technology and Consensus Protocols",
+      "Decentralized Application Basics and Research in Blockchain",
       "Live demo and Q&A"
     ],
     link: "",
