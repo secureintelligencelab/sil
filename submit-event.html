@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host an Event — Secure Intelligence Lab</title>
+<meta name="description" content="Propose a workshop, seminar, guest lecture, or sponsored session for the MRes students at the Secure Intelligence Lab, Crown Institute of Higher Education.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f3ee;--ink:#0f1b33;--ink-soft:#42506b;--ink-faint:#8a93a6;
+  --accent:#14264f;--gold:#c79a3a;--line:#d8d3c7;--white:#fffefb;
+  --serif:"Fraunces",Georgia,serif;--sans:"Archivo","Segoe UI",sans-serif;--mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;
+  min-height:100vh;display:grid;place-items:center;padding:2rem}
+.card{background:var(--white);border:1px solid var(--line);border-top:4px solid var(--gold);
+  max-width:560px;width:100%;border-radius:12px;padding:3rem 2.6rem;text-align:center;
+  box-shadow:0 30px 80px rgba(10,24,48,.12)}
+.mark{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--gold);
+  display:grid;place-items:center;margin:0 auto 1.4rem;font-size:1.4rem}
+.tag{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+h1{font-family:var(--serif);font-weight:600;font-size:2rem;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+p{color:var(--ink-soft);font-size:1rem;margin-bottom:1rem}
+ul{text-align:left;list-style:none;margin:1.2rem 0 1.8rem;display:grid;gap:.5rem}
+li{display:flex;gap:.7rem;align-items:flex-start;font-size:.95rem;color:var(--ink-soft)}
+li i{color:var(--gold);margin-top:.25rem;font-size:.8rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:var(--sans);font-weight:600;font-size:.98rem;padding:.9rem 1.8rem;border-radius:6px;
+  background:var(--ink);color:var(--paper);border:1.5px solid var(--ink);cursor:pointer;
+  transition:all .25s cubic-bezier(.22,1,.36,1);text-decoration:none;width:100%}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);margin-top:.7rem}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.note{font-size:.82rem;color:var(--ink-faint);margin-top:1.4rem}
+a.plain{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark"><i class="fas fa-shield-halved"></i></div>
+    <div class="tag">Secure Intelligence Lab · CIHE</div>
+    <h1>Host an event for our MRes students</h1>
+    <p>Propose a session and our admin will review it before it appears on the website. You'll create your own account so you can come back and manage your submissions.</p>
+    <ul>
+      <li><i class="fas fa-check"></i><span>Workshop, seminar, guest lecture, topic or special lecture</span></li>
+      <li><i class="fas fa-check"></i><span>Or sponsor an expert (fund a session)</span></li>
+      <li><i class="fas fa-check"></i><span>Add topic, description, date, time, speaker &amp; more</span></li>
+      <li><i class="fas fa-check"></i><span>Edit or withdraw your own events anytime</span></li>
+    </ul>
+    <a class="btn" href="index.html#register"><i class="fas fa-user-plus"></i> Create an account &amp; submit</a>
+    <a class="btn ghost" href="index.html#submit-event"><i class="fas fa-right-to-bracket"></i> I already have an account</a>
+    <p class="note">Taking you to the lab website… or <a class="plain" href="index.html#register">continue here</a>.</p>
+  </div>
+  <script>
+    // Auto-forward to the main site's register flow after a moment, so a shared
+    // link drops people straight into the form. The buttons work immediately too.
+    setTimeout(function(){ window.location.href = "index.html#register"; }, 2200);
+  </script>
+</body>
+</html>

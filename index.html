@@ -296,6 +296,91 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
   .pub{grid-template-columns:1fr;gap:.6rem}
   section{padding:4rem 0}
 }
+
+/* ===== Auth button in nav ===== */
+.auth-btn{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:.5rem .95rem;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;
+  transition:all .25s var(--ease);margin-left:.4rem;white-space:nowrap;
+}
+.auth-btn:hover{background:var(--ink);color:var(--paper)}
+.auth-btn i{font-size:.8rem}
+
+/* ===== Event status pills ===== */
+.event-status{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.18rem .5rem;border-radius:3px;font-weight:600}
+.event-status.pending{background:#fbeccd;color:#8a6212}
+.event-status.rejected{background:#f5d7d2;color:#9a342a}
+
+/* ===== Modal shell ===== */
+.modal{
+  position:fixed;inset:0;z-index:300;display:none;
+  background:rgba(10,24,48,.55);backdrop-filter:blur(4px);
+  align-items:flex-start;justify-content:center;padding:5rem 1.2rem 2rem;overflow:auto;
+}
+.modal.open{display:flex}
+.modal-card{
+  background:var(--white);border:1px solid var(--line);border-top:4px solid var(--gold);
+  width:100%;max-width:560px;border-radius:10px;padding:2.2rem;position:relative;
+  box-shadow:0 30px 80px rgba(10,24,48,.25);
+}
+.modal-card.wide{max-width:820px}
+.modal-card .close-x{
+  position:absolute;top:1rem;right:1.1rem;background:none;border:none;font-size:1.6rem;
+  line-height:1;color:var(--ink-faint);cursor:pointer
+}
+.modal-card .close-x:hover{color:var(--ink)}
+.modal-card h3.modal-title{font-family:var(--serif);font-weight:600;font-size:1.6rem;margin-bottom:.4rem}
+.modal-card p.modal-sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:1.5rem}
+.auth-error{color:#9a342a;font-size:.85rem;min-height:1.1em;margin-top:.4rem}
+.auth-tabs{display:flex;gap:.4rem;margin-bottom:1.4rem;border-bottom:1px solid var(--line)}
+.auth-tab{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:.6rem .9rem;background:none;border:none;border-bottom:2px solid transparent;
+  color:var(--ink-faint);cursor:pointer;transition:all .2s var(--ease);margin-bottom:-1px}
+.auth-tab.active{color:var(--ink);border-bottom-color:var(--gold);font-weight:600}
+.auth-tab:hover{color:var(--ink)}
+.form-msg{color:var(--accent);font-size:.85rem;min-height:1.1em;margin-top:.6rem}
+.muted{color:var(--ink-faint);font-size:.9rem}
+
+/* ===== Dashboard layout ===== */
+.dash-cols{display:grid;grid-template-columns:1fr;gap:1.8rem}
+.dash-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1.1rem}
+.dash-form-grid .field.full{grid-column:1/-1}
+.dash-form-grid select,.dash-form-grid input,.dash-form-grid textarea{
+  width:100%;padding:.7rem .85rem;border:1px solid var(--line);background:var(--paper);
+  font-family:var(--sans);font-size:.95rem;border-radius:5px;color:var(--ink)
+}
+.dash-form-grid select:focus,.dash-form-grid input:focus,.dash-form-grid textarea:focus{outline:none;border-color:var(--accent)}
+.check-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem}
+.check-row input{width:auto}
+.dash-list{display:flex;flex-direction:column;gap:.6rem;max-height:340px;overflow:auto;margin-top:.4rem}
+.dash-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  border:1px solid var(--line);border-radius:7px;padding:.7rem .9rem;background:var(--paper)}
+.dash-main{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.dash-main strong{font-size:.95rem}
+.dash-sub{font-size:.74rem;color:var(--ink-faint)}
+.dash-status{align-self:flex-start;font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:.12rem .45rem;border-radius:3px;margin-bottom:.2rem}
+.dash-status.approved{background:#d6ecd9;color:#216130}
+.dash-status.pending{background:#fbeccd;color:#8a6212}
+.dash-status.rejected{background:#f5d7d2;color:#9a342a}
+.dash-actions{display:flex;gap:.4rem;flex-wrap:wrap;flex-shrink:0}
+.mini{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;
+  padding:.4rem .7rem;border:1px solid var(--line);background:var(--white);border-radius:4px;cursor:pointer;color:var(--ink-soft)}
+.mini:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mini.ok{border-color:#216130;color:#216130}
+.mini.ok:hover{background:#216130;color:#fff}
+.mini.warn{border-color:#8a6212;color:#8a6212}
+.mini.warn:hover{background:#8a6212;color:#fff}
+.mini.danger{border-color:#9a342a;color:#9a342a}
+.mini.danger:hover{background:#9a342a;color:#fff}
+.dash-divider{border:none;border-top:1px solid var(--line);margin:1.8rem 0 1.2rem}
+.dash-row-actions{display:flex;gap:.7rem;align-items:center;margin-top:.4rem}
+@media(max-width:560px){
+  .dash-form-grid{grid-template-columns:1fr}
+  .dash-row{flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -315,7 +400,9 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
       <li><a href="#events">Events</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li id="dashNavItem" style="display:none"><a href="#" id="dashNavLink">My Events</a></li>
     </ul>
+    <button id="authBtn" class="auth-btn"><i class="fas fa-right-to-bracket"></i> Contributor Login</button>
     <button class="menu-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
   </nav>
 </header>
@@ -329,6 +416,7 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
   <a href="#events">Events</a>
   <a href="#publications">Publications</a>
   <a href="#contact">Contact</a>
+  <a href="#" id="authBtnMobile"><i class="fas fa-right-to-bracket"></i> Contributor Login</a>
 </div>
 
 <main>
@@ -449,7 +537,7 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
         <div class="sec-tag">04 — Events</div>
         <h2 class="sec-title">Workshops, webinars<br>&amp; guest lectures.</h2>
       </div>
-      <p class="sec-desc">Talks and training from the lab — upcoming sessions and past highlights. Join links appear on each event.</p>
+      <p class="sec-desc">Talks and training from the lab — upcoming sessions and past highlights. <strong>Want to host a workshop, seminar, guest lecture, topic/special lecture, or sponsor an expert for our MRes students?</strong> <a href="#register" id="hostEventLink" style="color:var(--accent);font-weight:600;text-decoration:underline">Create an account and submit your event.</a></p>
     </div>
     <div class="events-tabs reveal">
       <button class="ev-tab active" data-evfilter="upcoming">Upcoming</button>
@@ -504,6 +592,137 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
 </section>
 </main>
 
+<!-- ===================== LOGIN / REGISTER MODAL ===================== -->
+<div class="modal" id="authModal">
+  <div class="modal-card">
+    <button class="close-x" data-close-auth aria-label="Close">&times;</button>
+    <h3 class="modal-title">Contributor Access</h3>
+    <p class="modal-sub">Create your own account to propose an event for our MRes students, or sign in to manage events you've already submitted.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-authtab="login">Sign in</button>
+      <button class="auth-tab" data-authtab="register">Create account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" class="auth-pane" data-pane="login">
+      <div class="field">
+        <label for="li_email">Email</label>
+        <input type="email" id="li_email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="li_pass">Password</label>
+        <input type="password" id="li_pass" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Sign in <i class="fas fa-right-to-bracket"></i></button>
+      <div class="auth-error" id="authError"></div>
+    </form>
+
+    <!-- REGISTER -->
+    <form id="registerForm" class="auth-pane" data-pane="register" style="display:none">
+      <div class="field">
+        <label for="rg_name">Your name</label>
+        <input type="text" id="rg_name" placeholder="Dr Jane Smith" required>
+      </div>
+      <div class="field">
+        <label for="rg_org">Organisation / affiliation</label>
+        <input type="text" id="rg_org" placeholder="University / company (optional)">
+      </div>
+      <div class="field">
+        <label for="rg_email">Email</label>
+        <input type="email" id="rg_email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="rg_pass">Choose a password</label>
+        <input type="password" id="rg_pass" placeholder="At least 6 characters" minlength="6" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Create account <i class="fas fa-user-plus"></i></button>
+      <div class="auth-error" id="registerMsg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== DASHBOARD MODAL ===================== -->
+<div class="modal" id="dashModal">
+  <div class="modal-card wide">
+    <button class="close-x" data-close-dash aria-label="Close">&times;</button>
+    <h3 class="modal-title" id="f_formTitle">Submit a new event</h3>
+    <p class="modal-sub">Fill in the details below. Submissions are reviewed by the admin before they appear publicly.</p>
+
+    <input type="hidden" id="f_id">
+    <div class="dash-form-grid">
+      <div class="field">
+        <label for="f_type">Type of lecture</label>
+        <select id="f_type">
+          <option>Workshop</option>
+          <option>Seminar</option>
+          <option>Guest Lecture</option>
+          <option>Topic Lecture</option>
+          <option>Special Lecture</option>
+          <option>Webinar</option>
+          <option>Sponsored</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f_date">Date</label>
+        <input type="date" id="f_date" required>
+      </div>
+      <div class="field full">
+        <label for="f_title">Topic / Title</label>
+        <input type="text" id="f_title" placeholder="e.g. Hands-on Federated Learning" required>
+      </div>
+      <div class="field full">
+        <label for="f_desc">Short description</label>
+        <textarea id="f_desc" rows="3" placeholder="What will this session cover?"></textarea>
+      </div>
+      <div class="field">
+        <label for="f_time">Time</label>
+        <input type="text" id="f_time" placeholder="2:00 – 3:30 PM AEST">
+      </div>
+      <div class="field">
+        <label for="f_location">Location</label>
+        <input type="text" id="f_location" placeholder="Online (Teams) / Room 2.1, CIHE Sydney">
+      </div>
+      <div class="field">
+        <label for="f_speaker">Speaker name</label>
+        <input type="text" id="f_speaker" placeholder="Dr Jane Smith">
+      </div>
+      <div class="field">
+        <label for="f_speaker_info">Speaker information</label>
+        <input type="text" id="f_speaker_info" placeholder="Affiliation / bio / contact">
+      </div>
+      <div class="field">
+        <label for="f_link">Registration / join link (optional)</label>
+        <input type="text" id="f_link" placeholder="https://…">
+      </div>
+      <div class="field">
+        <label for="f_linktext">Button label</label>
+        <input type="text" id="f_linktext" placeholder="Register">
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="f_sponsored">
+      <label for="f_sponsored" style="font-family:var(--mono);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)">This is a sponsored session (funding an expert)</label>
+    </div>
+    <div class="field full" id="sponsorWrap" style="display:none">
+      <label for="f_sponsor_info">Sponsor / funding details</label>
+      <input type="text" id="f_sponsor_info" placeholder="Who is sponsoring, budget, expert sought, etc.">
+    </div>
+
+    <div class="dash-row-actions">
+      <button class="btn btn-primary" id="f_submitBtn"><i class="fas fa-paper-plane"></i> Submit event</button>
+      <button class="mini" id="f_newBtn">New / clear form</button>
+    </div>
+    <div class="form-msg" id="f_msg"></div>
+
+    <hr class="dash-divider">
+    <h3 class="modal-title" style="font-size:1.25rem">Manage events</h3>
+    <p class="modal-sub" style="margin-bottom:.6rem">Edit or delete your own events. The admin can approve, reject, edit, or delete any submission.</p>
+    <div class="dash-list" id="dashList"></div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -538,6 +757,8 @@ footer{background:var(--ink);color:var(--paper);padding:5rem 0 2.5rem;position:r
 <script src="data-projects.js"></script>
 <script src="data-publications.js"></script>
 <script src="data-events.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
 const header=document.querySelector('header');
 const progress=document.querySelector('.progress');
@@ -626,67 +847,14 @@ ps.addEventListener('input',e=>{
   document.querySelectorAll('#pubList .pub').forEach(p=>{p.style.display=p.textContent.toLowerCase().includes(t)?'':'none';});
 });
 
-// ---- render events from data-events.js ----
-const eventsList=document.getElementById('eventsList');
-function fmtDate(iso){
-  const d=new Date(iso+'T00:00:00');
-  if(isNaN(d)) return iso;
-  return d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
-}
-function buildEvent(ev,isPast){
-  const topics=(ev.topics&&ev.topics.length)?
-    `<div class="event-topics"><div class="lbl">Topics</div><ul>${ev.topics.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:'';
-  const meta=[
-    `<div class="row"><i class="fas fa-calendar-day"></i><span>${esc(fmtDate(ev.date))}</span></div>`,
-    ev.time?`<div class="row"><i class="fas fa-clock"></i><span>${esc(ev.time)}</span></div>`:'',
-    ev.location?`<div class="row"><i class="fas fa-location-dot"></i><span>${esc(ev.location)}</span></div>`:'',
-    ev.speaker?`<div class="row"><i class="fas fa-user"></i><span>${esc(ev.speaker)}</span></div>`:''
-  ].join('');
-  let cta='';
-  if(ev.link){
-    const label=ev.linkText||(isPast?'View Recording':'Join');
-    const icon=isPast?'fa-arrow-up-right-from-square':'fa-video';
-    cta=`<div class="event-cta"><a class="event-join" href="${esc(ev.link)}" target="_blank" rel="noopener"><i class="fas ${icon}"></i>${esc(label)}</a></div>`;
-  }
-  const pill=isPast?'Past event':'Upcoming';
-  return `<div class="event ${isPast?'past':'upcoming'} reveal" data-ev="${isPast?'past':'upcoming'}">
-    <div class="event-top">
-      <span class="event-type">${esc(ev.type||'Event')}</span>
-      <span class="event-when-pill">${pill}</span>
-    </div>
-    <h3>${esc(ev.title)}</h3>
-    ${ev.speaker?`<p class="speaker">${esc(ev.speaker)}</p>`:''}
-    <div class="event-meta">${meta}</div>
-    ${topics}
-    ${cta}
-  </div>`;
-}
-function renderEvents(filter){
-  const data=(typeof EVENTS!=='undefined')?EVENTS.slice():[];
-  const today=new Date(); today.setHours(0,0,0,0);
-  const withPast=data.map(ev=>({ev,past:(new Date(ev.date+'T00:00:00'))<today}));
-  // upcoming sorted soonest-first; past sorted most-recent-first
-  const up=withPast.filter(x=>!x.past).sort((a,b)=>new Date(a.ev.date)-new Date(b.ev.date));
-  const pa=withPast.filter(x=>x.past).sort((a,b)=>new Date(b.ev.date)-new Date(a.ev.date));
-  let show=[];
-  if(filter==='upcoming') show=up;
-  else if(filter==='past') show=pa;
-  else show=up.concat(pa);
-  if(!show.length){
-    const msg=filter==='upcoming'?'No upcoming events right now — check back soon.':filter==='past'?'No past events listed yet.':'No events listed yet.';
-    eventsList.innerHTML=`<p class="events-empty">${msg}</p>`;
-    return;
-  }
-  eventsList.innerHTML=show.map(x=>buildEvent(x.ev,x.past)).join('');
-  // re-observe newly added cards for reveal animation
-  eventsList.querySelectorAll('.reveal').forEach(el=>{el.classList.add('in');});
-}
-renderEvents('upcoming');
-document.querySelectorAll('.ev-tab').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.ev-tab').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  renderEvents(b.dataset.evfilter);
-}));
+// ---- events are now rendered by events-app.js (Supabase-backed) ----
+// The Events-section CTA uses href="#register"; events-app.js opens the
+// create-account form on that hash. We just ensure the hash event fires.
+const hostLink=document.getElementById('hostEventLink');
+if(hostLink){hostLink.addEventListener('click',()=>{
+  // if already on #register, force the handler by re-dispatching
+  if(location.hash==='#register'){window.dispatchEvent(new HashChangeEvent('hashchange'));}
+});}
 // make dynamically-rendered publications visible (reveal)
 pubList.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
 
@@ -703,6 +871,9 @@ const mm=document.querySelector('.mobile-menu');
 document.querySelector('.menu-btn').addEventListener('click',()=>mm.classList.add('open'));
 document.querySelector('.mobile-menu .close').addEventListener('click',()=>mm.classList.remove('open'));
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+const authBtnMobile=document.getElementById('authBtnMobile');
+if(authBtnMobile){authBtnMobile.addEventListener('click',e=>{e.preventDefault();const b=document.getElementById('authBtn');if(b)b.click();});}
 </script>
+<script src="events-app.js"></script>
 </body>
 </html>
