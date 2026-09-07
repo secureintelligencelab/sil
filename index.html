@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Intelligence Lab — Crown Institute of Higher Education</title>
+<meta name="description" content="The Secure Intelligence Lab at Crown Institute of Higher Education advances cybersecurity research through artificial intelligence and machine learning.">
+<meta name="theme-color" content="#0B1B33">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+/* ================================================================
+   Home page — layout specific to index.html
+   ================================================================ */
+
+/* ------------------------------------------------------- hero panel */
+.hero{
+  background:var(--deep);
+  color:#fff;
+  padding:calc(var(--header-h) + 5.5rem) 0 0;
+  position:relative;
+  overflow:hidden;
+}
+/* fine coordinate grid — a lab instrument reading, not decoration */
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(120% 90% at 78% 6%,#000 0%,transparent 72%);
+  -webkit-mask-image:radial-gradient(120% 90% at 78% 6%,#000 0%,transparent 72%);
+}
+.hero .wrap{z-index:1}
+.hero-eyebrow{
+  font-size:.85rem;color:var(--gold);font-weight:500;
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;
+}
+.hero-eyebrow::before{content:"";width:26px;height:1px;background:var(--gold)}
+.hero h1{color:#fff;max-width:17ch;margin-bottom:1.5rem}
+.hero .lede{color:rgba(255,255,255,.72);max-width:56ch;margin-bottom:2.25rem}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:4.5rem}
+
+/* stat rail sits inside the panel, flush to its base */
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.hero-stats>div{padding:1.5rem 2rem 1.75rem 0}
+.hero-stats .n{
+  font-size:2.1rem;font-weight:600;letter-spacing:-.03em;line-height:1;
+  color:#fff;font-variant-numeric:tabular-nums;
+}
+.hero-stats .l{font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.45rem}
+
+/* ------------------------------------------------- section scaffolding */
+section{padding:5.5rem 0}
+section.alt{background:var(--surface)}
+.sec-head{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);
+  gap:3rem;align-items:end;margin-bottom:2.75rem;
+}
+.sec-label{font-size:.85rem;font-weight:600;color:var(--gold);margin-bottom:.6rem}
+.sec-title{font-size:clamp(1.75rem,3.4vw,2.4rem);letter-spacing:-.028em;line-height:1.12}
+.sec-desc{color:var(--ink-2);font-size:1rem;max-width:48ch}
+
+/* -------------------------------------------------------------- about */
+.about-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:4rem;align-items:start}
+.about-text p{color:var(--ink-2);margin-bottom:1.1rem;max-width:64ch}
+.about-text p:first-child{font-size:1.1rem;color:var(--ink);line-height:1.6}
+
+.focus-list{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.focus-list li{padding:1.05rem 1.35rem;border-bottom:1px solid var(--line)}
+.focus-list li:last-child{border-bottom:none}
+.focus-list b{display:block;font-weight:600;font-size:.96rem;margin-bottom:.15rem}
+.focus-list span{font-size:.88rem;color:var(--ink-3)}
+
+/* --------------------------------------------------------------- team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.25rem}
+.member{
+  background:var(--ground);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:1.6rem;display:flex;flex-direction:column;
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease);
+}
+section.alt .member{background:var(--surface)}
+.member:hover{border-color:var(--line-2);box-shadow:var(--sh-2)}
+.member .avatar{
+  width:48px;height:48px;border-radius:var(--r);
+  display:grid;place-items:center;margin-bottom:1.1rem;
+  background:var(--navy);color:#fff;font-size:.95rem;font-weight:600;
+}
+.member:nth-child(3n+2) .avatar{background:var(--deep-2)}
+.member:nth-child(3n+3) .avatar{background:var(--gold);color:var(--deep)}
+.member h3{font-size:1.05rem;margin-bottom:.2rem}
+.member .role{font-size:.85rem;color:var(--navy);font-weight:500;margin-bottom:.75rem}
+.member .bio{font-size:.9rem;color:var(--ink-2);flex:1;margin-bottom:1.1rem}
+.member .profile-link{
+  font-size:.875rem;font-weight:600;color:var(--ink);
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding-top:1rem;border-top:1px solid var(--line);
+}
+.member .profile-link i{font-size:.7rem;color:var(--ink-3);transition:transform var(--fast) var(--ease)}
+.member:hover .profile-link{color:var(--navy)}
+.member:hover .profile-link i{transform:translateX(3px);color:var(--navy)}
+
+/* ----------------------------------------------------------- projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem;margin-top:2rem}
+.project{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:1.6rem;
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease);
+}
+.project:hover{border-color:var(--line-2);box-shadow:var(--sh-2)}
+.project .status{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:500;margin-bottom:.9rem;
+}
+.project .status .dot{width:6px;height:6px;border-radius:50%}
+.status.active{color:var(--ok)} .status.active .dot{background:var(--ok)}
+.status.completed{color:var(--ink-3)} .status.completed .dot{background:var(--ink-3)}
+.project h3{font-size:1.02rem;line-height:1.35;margin-bottom:.55rem}
+.project p{font-size:.9rem;color:var(--ink-2)}
+
+/* ------------------------------------------------------------- events */
+.events-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;margin-top:2rem}
+.event{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:1.6rem;display:flex;flex-direction:column;
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease);
+}
+.event:hover{border-color:var(--line-2);box-shadow:var(--sh-2)}
+.event-top{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+.event-type{
+  font-size:.72rem;font-weight:600;padding:.24rem .6rem;
+  border-radius:var(--r-full);background:var(--navy-50);color:var(--navy);
+}
+.event.past .event-type{background:var(--sunken);color:var(--ink-3)}
+.event-when-pill{font-size:.76rem;color:var(--ink-3);margin-left:auto}
+.event-status{
+  font-size:.72rem;font-weight:600;padding:.24rem .6rem;
+  border-radius:var(--r-full);text-transform:capitalize;
+}
+.event-status.pending{background:var(--warn-50);color:var(--warn)}
+.event-status.rejected{background:var(--bad-50);color:var(--bad)}
+.event h3{font-size:1.08rem;line-height:1.32;margin-bottom:.35rem}
+.event .speaker{font-size:.9rem;color:var(--ink-2);margin-bottom:1rem}
+.event-meta{
+  display:flex;flex-direction:column;gap:.45rem;
+  padding:.95rem 0;margin-bottom:1rem;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.event-meta .row{display:flex;gap:.65rem;font-size:.88rem;color:var(--ink-2)}
+.event-meta .row i{width:1rem;text-align:center;color:var(--ink-3);font-size:.82rem;margin-top:.2rem}
+.event-topics{margin-bottom:1.2rem}
+.event-topics .lbl{font-size:.78rem;font-weight:600;color:var(--ink-3);margin-bottom:.4rem}
+.event-topics ul{list-style:none}
+.event-topics li{font-size:.88rem;color:var(--ink-2);padding-left:.9rem;position:relative;margin-bottom:.25rem}
+.event-topics li::before{content:"";position:absolute;left:0;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--line-2)}
+.event-cta{margin-top:auto}
+.event-join{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.88rem;font-weight:600;padding:.6rem 1.1rem;
+  border-radius:var(--r-sm);background:var(--navy);color:#fff;
+  transition:background var(--fast) var(--ease);
+}
+.event-join:hover{background:var(--navy-600)}
+.event.past .event-join{background:var(--sunken);color:var(--ink)}
+.event.past .event-join:hover{background:var(--line-2)}
+.events-empty{
+  grid-column:1/-1;color:var(--ink-3);font-size:.95rem;
+  padding:3rem 1.5rem;text-align:center;
+  border:1px dashed var(--line-2);border-radius:var(--r-lg);
+}
+
+/* the host-an-event prompt gets its own card rather than a run-on sentence */
+.host-cta{
+  display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;
+  background:var(--ground);border:1px solid var(--line);
+  border-left:3px solid var(--gold);
+  border-radius:var(--r);padding:1.15rem 1.35rem;margin-top:1.5rem;
+}
+.host-cta p{font-size:.92rem;color:var(--ink-2);flex:1;min-width:16rem}
+.host-cta strong{color:var(--ink)}
+
+/* ------------------------------------------------------- publications */
+.pub-search{position:relative;max-width:400px;margin-bottom:1.5rem}
+.pub-search input{
+  width:100%;padding:.7rem .95rem .7rem 2.5rem;
+  border:1px solid var(--line-2);background:var(--surface);
+  border-radius:var(--r-sm);font-family:var(--sans);font-size:.93rem;color:var(--ink);
+  transition:border-color var(--fast) var(--ease),box-shadow var(--fast) var(--ease);
+}
+.pub-search input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px var(--navy-50)}
+.pub-search i{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:.85rem}
+.pub-list{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+.pub{
+  display:grid;grid-template-columns:auto 1fr;gap:1.5rem;
+  padding:1.4rem 1.5rem;border-bottom:1px solid var(--line);
+}
+.pub:last-child{border-bottom:none}
+.pub .yr{
+  font-family:var(--mono);font-size:.85rem;color:var(--ink-3);
+  padding-top:.15rem;font-variant-numeric:tabular-nums;
+}
+.pub h4{font-size:1rem;line-height:1.4;font-weight:600;margin-bottom:.35rem}
+.pub .authors{font-size:.88rem;color:var(--ink-2);margin-bottom:.15rem}
+.pub .venue{font-size:.85rem;color:var(--ink-3)}
+.pub .pub-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.86rem;font-weight:600;color:var(--navy);margin-top:.6rem;
+}
+.pub .pub-link:hover{text-decoration:underline}
+
+/* ------------------------------------------------------------ contact */
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:start}
+.contact-card{
+  background:var(--ground);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:1.75rem;
+}
+.cm-item{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.cm-item:first-child{padding-top:0}
+.cm-item:last-child{border-bottom:none;padding-bottom:0}
+.cm-item .ic{
+  width:36px;height:36px;flex-shrink:0;border-radius:var(--r-sm);
+  display:grid;place-items:center;background:var(--navy-50);color:var(--navy);font-size:.9rem;
+}
+.cm-item h4{font-size:.82rem;color:var(--ink-3);font-weight:600;margin-bottom:.2rem}
+.cm-item p{font-size:.95rem;color:var(--ink)}
+
+/* ---------------------------------------------------------- dashboard */
+.dash-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1.1rem}
+.dash-form-grid .field.full{grid-column:1/-1}
+.check-row{
+  display:flex;align-items:flex-start;gap:.65rem;
+  padding:.9rem 1rem;background:var(--ground);
+  border:1px solid var(--line);border-radius:var(--r-sm);margin-bottom:1.1rem;
+}
+.check-row input{width:auto;margin-top:.15rem;accent-color:var(--navy)}
+.check-row label{font-size:.9rem;color:var(--ink-2);cursor:pointer}
+.dash-actions-bar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.5rem}
+
+.dash-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1.1rem}
+.dash-row{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  border:1px solid var(--line);border-radius:var(--r);
+  padding:.85rem 1rem;background:var(--surface);
+}
+.dash-main{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.dash-main strong{font-size:.95rem;font-weight:600;letter-spacing:-.01em}
+.dash-sub{font-size:.82rem;color:var(--ink-3)}
+.dash-status{
+  align-self:flex-start;font-size:.7rem;font-weight:600;
+  padding:.18rem .5rem;border-radius:var(--r-full);text-transform:capitalize;
+}
+.dash-status.approved{background:var(--ok-50);color:var(--ok)}
+.dash-status.pending{background:var(--warn-50);color:var(--warn)}
+.dash-status.rejected{background:var(--bad-50);color:var(--bad)}
+.dash-actions{display:flex;gap:.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.mini{
+  font-size:.8rem;font-weight:500;padding:.35rem .7rem;
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);
+  border-radius:var(--r-xs);cursor:pointer;
+  transition:background var(--fast) var(--ease),color var(--fast) var(--ease),border-color var(--fast) var(--ease);
+}
+.mini:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.mini.ok{color:var(--ok);border-color:#BFE3CE}
+.mini.ok:hover{background:var(--ok);border-color:var(--ok);color:#fff}
+.mini.warn{color:var(--warn);border-color:#EBD6A6}
+.mini.warn:hover{background:var(--warn);border-color:var(--warn);color:#fff}
+.mini.danger{color:var(--bad);border-color:#EFC7C1}
+.mini.danger:hover{background:var(--bad);border-color:var(--bad);color:#fff}
+
+.dash-empty{
+  padding:2.5rem 1.5rem;text-align:center;color:var(--ink-3);font-size:.92rem;
+  border:1px dashed var(--line-2);border-radius:var(--r);
+}
+
+/* auth modal specifics */
+.auth-switch{margin-bottom:1.4rem}
+.auth-aside{
+  display:flex;gap:.7rem;padding:.85rem 1rem;margin-bottom:1.4rem;
+  background:var(--navy-50);border-radius:var(--r-sm);
+  font-size:.87rem;color:var(--navy);line-height:1.5;
+}
+.auth-aside i{margin-top:.2rem}
+
+/* ---------------------------------------------------------- responsive */
+@media(max-width:960px){
+  .sec-head{grid-template-columns:1fr;gap:1.25rem;align-items:start}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
+}
+@media(max-width:640px){
+  section{padding:3.5rem 0}
+  .hero{padding-top:calc(var(--header-h) + 3.5rem)}
+  .hero-actions{margin-bottom:3rem}
+  .hero-stats{grid-template-columns:1fr}
+  .hero-stats>div{padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .hero-stats>div:last-child{border-bottom:none}
+  .dash-form-grid{grid-template-columns:1fr}
+  .dash-row{flex-direction:column;align-items:flex-start}
+  .dash-actions{justify-content:flex-start}
+  .pub{grid-template-columns:1fr;gap:.4rem}
+}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <span class="mark"><i class="fas fa-shield-halved"></i></span>
+      <span class="brand-text">
+        <span class="brand-name">Secure Intelligence Lab</span>
+        <span class="brand-sub">Crown Institute of Higher Education</span>
+      </span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+
+    <!-- ============ CONTRIBUTOR / ACCOUNT MENU ============ -->
+    <div class="acct" id="acct">
+      <!-- signed out -->
+      <button id="authBtn" class="btn btn-primary btn-sm">
+        <i class="fas fa-right-to-bracket"></i> Contributor sign in
+      </button>
+
+      <!-- signed in -->
+      <button id="acctTrigger" class="acct-trigger" hidden
+              aria-haspopup="true" aria-expanded="false" aria-controls="acctMenu">
+        <span class="acct-avatar" id="acctAvatar">··</span>
+        <span class="acct-id">
+          <span class="acct-name" id="acctName">Account</span>
+          <span class="acct-role" id="acctRole">Contributor</span>
+        </span>
+        <i class="fas fa-chevron-down acct-caret" aria-hidden="true"></i>
+      </button>
+
+      <div class="acct-menu" id="acctMenu" role="menu" aria-labelledby="acctTrigger" hidden>
+        <div class="acct-menu-head">
+          <span class="acct-avatar lg" id="acctAvatarLg">··</span>
+          <div style="min-width:0">
+            <div class="acct-menu-name" id="acctMenuName">Account</div>
+            <div class="acct-menu-mail" id="acctMenuMail">—</div>
+          </div>
+          <span class="badge badge-navy" id="acctBadge">Contributor</span>
+        </div>
+
+        <div class="acct-group">
+          <button class="acct-item" role="menuitem" data-acct="submit">
+            <i class="fa-regular fa-square-plus" aria-hidden="true"></i>
+            <span class="acct-item-label">Submit an event</span>
+          </button>
+          <button class="acct-item" role="menuitem" data-acct="manage">
+            <i class="fa-regular fa-calendar-check" aria-hidden="true"></i>
+            <span class="acct-item-label">My events</span>
+          </button>
+          <button class="acct-item" role="menuitem" data-acct="review" id="acctReviewItem" hidden>
+            <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
+            <span class="acct-item-label">Review queue</span>
+            <span class="acct-count" id="acctPending" data-zero="true">0</span>
+          </button>
+        </div>
+
+        <div class="acct-group">
+          <button class="acct-item danger" role="menuitem" data-acct="signout">
+            <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+            <span class="acct-item-label">Sign out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+  </nav>
+</header>
+
+<!-- ===================== MOBILE MENU ===================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-head">
+    <span class="brand">
+      <span class="mark"><i class="fas fa-shield-halved"></i></span>
+      <span class="brand-text"><span class="brand-name">Secure Intelligence Lab</span></span>
+    </span>
+    <button class="close" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="mobile-body">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#team">Team</a>
+    <a href="#projects">Projects</a>
+    <a href="#events">Events</a>
+    <a href="#publications">Publications</a>
+    <a href="#contact">Contact</a>
+
+    <div class="mobile-acct">
+      <div class="who" id="mobileWho" hidden>
+        <span class="acct-avatar" id="acctAvatarM">··</span>
+        <div style="min-width:0">
+          <div class="acct-menu-name" id="acctNameM">Account</div>
+          <div class="acct-menu-mail" id="acctMailM">—</div>
+        </div>
+      </div>
+      <div class="stack-sm">
+        <a href="#" id="authBtnMobile" class="btn btn-primary btn-block">
+          <i class="fas fa-right-to-bracket"></i> Contributor sign in
+        </a>
+        <a href="#" id="acctDashMobile" class="btn btn-secondary btn-block" hidden>
+          <i class="fa-regular fa-calendar-check"></i> My events
+        </a>
+        <a href="#" id="acctSignoutMobile" class="btn btn-quiet btn-block" hidden>
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign out
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section id="home" class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">School of IT · Sydney, Australia</p>
+    <h1 class="display">Cybersecurity research, built on machine intelligence.</h1>
+    <p class="lede">We study how AI and machine learning can defend critical infrastructure, personal data, and the systems people rely on every day — from intrusion detection in connected vehicles to privacy-preserving health networks.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">Explore our research</a>
+      <a href="#contact" class="btn btn-on-deep">Work with the lab</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n">5</div><div class="l">Active projects</div></div>
+      <div><div class="n">3+</div><div class="l">Publications</div></div>
+      <div><div class="n">5</div><div class="l">Researchers</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">About the lab</div>
+        <h2 class="sec-title">A research group built around hard problems</h2>
+      </div>
+      <p class="sec-desc">We lead cybersecurity innovation through interdisciplinary research and close collaboration with industry, government, and academia.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>The Secure Intelligence Lab is a research group at Crown Institute of Higher Education dedicated to advancing cybersecurity through novel applications of artificial intelligence and machine learning.</p>
+        <p>Our team of researchers, research assistants, and industry partners works on the security challenges of the digital age — building systems that protect critical infrastructure, personal data, and emerging technologies.</p>
+        <p>We work across threat detection, behavioural analytics, secure communication protocols, and adaptive AI-powered security systems that evolve alongside the threats they defend against.</p>
+      </div>
+      <ul class="focus-list reveal">
+        <li><b>AI-powered cybersecurity</b><span>Adaptive defence systems</span></li>
+        <li><b>Threat &amp; intrusion detection</b><span>IoV, IoMT, and network security</span></li>
+        <li><b>Machine &amp; deep learning</b><span>Explainable models</span></li>
+        <li><b>Blockchain technology</b><span>Privacy-preserving systems</span></li>
+        <li><b>Behavioural analytics</b><span>Keystroke dynamics and identity</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TEAM ===================== -->
+<section id="team" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">Team</div>
+        <h2 class="sec-title">The people behind the research</h2>
+      </div>
+      <p class="sec-desc">Meet the researchers driving cybersecurity innovation at the lab. Select any profile for full details.</p>
+    </div>
+    <div class="team-grid">
+      <div class="member reveal">
+        <div class="avatar">RR</div>
+        <h3>Assoc/Prof Reza Rafeh</h3>
+        <div class="role">Director</div>
+        <p class="bio">PhD in Computer Science, Monash University. Expertise in constraint programming and optimization, data and opinion mining, and networking.</p>
+        <a href="profile-reza-rafeh.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">AU</div>
+        <h3>Dr Ashraf Uddin</h3>
+        <div class="role">Research Manager</div>
+        <p class="bio">PhD in IT (Cybersecurity), Federation University Australia. Expertise in blockchain, machine learning, and cybersecurity.</p>
+        <a href="profile-ashraf-uddin.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">NH</div>
+        <h3>Dr Nam Hoai Chu</h3>
+        <div class="role">Senior Researcher</div>
+        <p class="bio">PhD in Advanced Machine Learning for 6G Networks, University of Technology Sydney. Expertise in reinforcement learning, deep learning, and networking.</p>
+        <a href="profile-nam-hoai-chu.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">IH</div>
+        <h3>Dr Md Imran Hossain</h3>
+        <div class="role">Research Associate</div>
+        <p class="bio">PhD (IT), UNSW. Expertise in blockchain and cybersecurity.</p>
+        <a href="profile-imran-hossain.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">MT</div>
+        <h3>Alamin Talukder</h3>
+        <div class="role">Research Fellow</div>
+        <p class="bio">MSc in Computer Science and Engineering, Jagannath University, Bangladesh. Expertise in machine learning, deep learning, and cybersecurity.</p>
+        <a href="profile-alamin-talukder.html" class="profile-link">View profile <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">Projects</div>
+        <h2 class="sec-title">Current research projects</h2>
+      </div>
+      <p class="sec-desc">Work tackling tomorrow's security challenges across health, mobility, and finance.</p>
+    </div>
+    <div class="chips reveal">
+      <button class="chip filter-btn active" data-filter="all">All</button>
+      <button class="chip filter-btn" data-filter="active">Active</button>
+      <button class="chip filter-btn" data-filter="completed">Completed</button>
+    </div>
+    <div class="projects" id="projectsList"></div>
+  </div>
+</section>
+
+<!-- ===================== EVENTS ===================== -->
+<section id="events" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">Events</div>
+        <h2 class="sec-title">Workshops, webinars &amp; guest lectures</h2>
+      </div>
+      <p class="sec-desc">Talks and training from the lab — upcoming sessions and past highlights.</p>
+    </div>
+
+    <div class="chips reveal">
+      <button class="chip ev-tab active" data-evfilter="upcoming">Upcoming</button>
+      <button class="chip ev-tab" data-evfilter="past">Past</button>
+      <button class="chip ev-tab" data-evfilter="all">All</button>
+    </div>
+
+    <div class="host-cta reveal">
+      <p><strong>Want to host a session?</strong> Contributors can propose a workshop, seminar, guest lecture, or sponsor an expert for our MRes students.</p>
+      <a href="#register" id="hostEventLink" class="btn btn-secondary btn-sm">
+        <i class="fa-regular fa-square-plus"></i> Submit an event
+      </a>
+    </div>
+
+    <div class="events-list" id="eventsList"></div>
+  </div>
+</section>
+
+<!-- ===================== PUBLICATIONS ===================== -->
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">Publications</div>
+        <h2 class="sec-title">Recent publications</h2>
+      </div>
+      <p class="sec-desc">Our latest contributions to the cybersecurity research community.</p>
+    </div>
+    <div class="pub-search reveal">
+      <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+      <label for="pubSearch" style="position:absolute;left:-9999px">Search publications</label>
+      <input type="text" id="pubSearch" placeholder="Search by title, author, or venue">
+    </div>
+    <div class="pub-list" id="pubList"></div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-label">Contact</div>
+        <h2 class="sec-title">Let's collaborate</h2>
+      </div>
+      <p class="sec-desc">We welcome partnerships with industry, academia, and government. Tell us what you're working on.</p>
+    </div>
+    <div class="contact-grid">
+      <form id="contactForm" class="reveal">
+        <div class="field"><label for="name">Name</label><input type="text" id="name" autocomplete="name" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" autocomplete="email" required></div>
+        <div class="field"><label for="subject">Subject</label><input type="text" id="subject" required></div>
+        <div class="field"><label for="message">Message</label><textarea id="message" rows="5" required></textarea></div>
+        <button type="submit" class="btn btn-primary">Send message <i class="fas fa-paper-plane"></i></button>
+      </form>
+      <div class="contact-card reveal">
+        <div class="cm-item">
+          <span class="ic"><i class="fas fa-location-dot"></i></span>
+          <div><h4>Address</h4><p>School of IT, Crown Institute of Higher Education, Sydney, Australia</p></div>
+        </div>
+        <div class="cm-item">
+          <span class="ic"><i class="fas fa-envelope"></i></span>
+          <div><h4>Email</h4><p><a href="mailto:ashraf.uddin@cihe.edu.au" class="link-cta">ashraf.uddin@cihe.edu.au</a></p></div>
+        </div>
+        <div class="cm-item">
+          <span class="ic"><i class="fas fa-phone"></i></span>
+          <div><h4>Phone</h4><p>+61 02 9955 0488</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== SIGN IN / REGISTER ===================== -->
+<div class="modal" id="authModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-head">
+      <button class="close-x" data-close-auth aria-label="Close">&times;</button>
+      <h3 class="modal-title" id="authModalTitle">Contributor access</h3>
+      <p class="modal-sub">Create an account to propose an event for our MRes students, or sign in to manage events you've already submitted.</p>
+    </div>
+    <div class="modal-body">
+      <div class="seg auth-switch">
+        <button class="auth-tab active" data-authtab="login">Sign in</button>
+        <button class="auth-tab" data-authtab="register">Create account</button>
+      </div>
+
+      <form id="loginForm" class="auth-pane" data-pane="login">
+        <div class="field">
+          <label for="li_email">Email</label>
+          <input type="email" id="li_email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="li_pass">Password</label>
+          <input type="password" id="li_pass" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        <div class="form-note err" id="authError"></div>
+      </form>
+
+      <form id="registerForm" class="auth-pane" data-pane="register" style="display:none">
+        <div class="auth-aside">
+          <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
+          <span>Anyone can create a contributor account. Events you submit are reviewed by the lab before they appear publicly.</span>
+        </div>
+        <div class="field">
+          <label for="rg_name">Your name</label>
+          <input type="text" id="rg_name" placeholder="Dr Jane Smith" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="rg_org">Organisation</label>
+          <input type="text" id="rg_org" placeholder="University or company" autocomplete="organization">
+          <div class="hint">Optional — shown to the lab when reviewing your submission.</div>
+        </div>
+        <div class="field">
+          <label for="rg_email">Email</label>
+          <input type="email" id="rg_email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="rg_pass">Password</label>
+          <input type="password" id="rg_pass" placeholder="At least 6 characters" minlength="6" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        <div class="form-note err" id="registerMsg"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTRIBUTOR DASHBOARD ===================== -->
+<div class="modal" id="dashModal">
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="dashTitle">
+    <div class="modal-head">
+      <button class="close-x" data-close-dash aria-label="Close">&times;</button>
+      <h3 class="modal-title" id="dashTitle">Contributor dashboard</h3>
+      <p class="modal-sub" id="dashSub">Submit a session for the lab to review, or manage what you've already sent in.</p>
+      <div class="seg" id="dashTabs" style="margin-top:1.1rem">
+        <button class="dash-tab active" data-dashtab="form">Submit an event</button>
+        <button class="dash-tab" data-dashtab="list">Manage events</button>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <!-- ---------- submit / edit pane ---------- -->
+      <div class="dash-pane" data-dashpane="form">
+        <h4 id="f_formTitle" style="font-size:1.02rem;margin-bottom:1.1rem">Submit a new event</h4>
+        <input type="hidden" id="f_id">
+        <div class="dash-form-grid">
+          <div class="field">
+            <label for="f_type">Type of session</label>
+            <select id="f_type">
+              <option>Workshop</option>
+              <option>Seminar</option>
+              <option>Guest Lecture</option>
+              <option>Topic Lecture</option>
+              <option>Special Lecture</option>
+              <option>Webinar</option>
+              <option>Sponsored</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f_date">Date</label>
+            <input type="date" id="f_date" required>
+          </div>
+          <div class="field full">
+            <label for="f_title">Title</label>
+            <input type="text" id="f_title" placeholder="Hands-on federated learning" required>
+          </div>
+          <div class="field full">
+            <label for="f_desc">Description</label>
+            <textarea id="f_desc" rows="3" placeholder="What will this session cover?"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_time">Time</label>
+            <input type="text" id="f_time" placeholder="2:00 – 3:30 PM AEST">
+          </div>
+          <div class="field">
+            <label for="f_location">Location</label>
+            <input type="text" id="f_location" placeholder="Online (Teams) or Room 2.1, CIHE Sydney">
+          </div>
+          <div class="field">
+            <label for="f_speaker">Speaker name</label>
+            <input type="text" id="f_speaker" placeholder="Dr Jane Smith">
+          </div>
+          <div class="field">
+            <label for="f_speaker_info">Speaker details</label>
+            <input type="text" id="f_speaker_info" placeholder="Affiliation, short bio, or contact">
+          </div>
+          <div class="field">
+            <label for="f_link">Registration link</label>
+            <input type="text" id="f_link" placeholder="https://…">
+            <div class="hint">Optional. Leave blank if there is nothing to sign up for yet.</div>
+          </div>
+          <div class="field">
+            <label for="f_linktext">Button label</label>
+            <input type="text" id="f_linktext" placeholder="Register">
+          </div>
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" id="f_sponsored">
+          <label for="f_sponsored">This is a sponsored session — we are funding an external expert to present.</label>
+        </div>
+        <div class="field" id="sponsorWrap" style="display:none">
+          <label for="f_sponsor_info">Sponsor details</label>
+          <input type="text" id="f_sponsor_info" placeholder="Who is sponsoring, budget, and the expertise you're looking for">
+        </div>
+
+        <div class="dash-actions-bar">
+          <button class="btn btn-primary" id="f_submitBtn"><i class="fas fa-paper-plane"></i> Submit event</button>
+          <button class="btn btn-quiet" id="f_newBtn">Clear form</button>
+        </div>
+        <div class="form-note" id="f_msg"></div>
+      </div>
+
+      <!-- ---------- manage pane ---------- -->
+      <div class="dash-pane" data-dashpane="list" style="display:none">
+        <div class="chips" id="dashFilter">
+          <button class="chip active" data-dashfilter="all">All</button>
+          <button class="chip" data-dashfilter="pending">Pending</button>
+          <button class="chip" data-dashfilter="approved">Approved</button>
+          <button class="chip" data-dashfilter="rejected">Rejected</button>
+        </div>
+        <div class="dash-list" id="dashList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="mark"><i class="fas fa-shield-halved"></i></span>
+          <span>Secure Intelligence Lab</span>
+        </div>
+        <p>Advancing cybersecurity research through artificial intelligence and machine learning at Crown Institute of Higher Education.</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/school/crown-institute-of-higher-education/posts/?feedView=all" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>Research areas</h5>
+        <ul>
+          <li>AI-powered cybersecurity</li>
+          <li>Threat intelligence</li>
+          <li>Machine &amp; deep learning</li>
+          <li>IoT security</li>
+          <li>Blockchain technology</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="https://www.cihe.edu.au/">About CIHE</a></li>
+          <li><a href="#team">Our team</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 Secure Intelligence Lab, Crown Institute of Higher Education.</span>
+      <span>ashraf.uddin@cihe.edu.au</span>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<script src="data-projects.js"></script>
+<script src="data-publications.js"></script>
+<script src="data-events.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+/* ---------------------------------------------------------------- chrome */
+const header   = document.querySelector('header');
+const progress = document.querySelector('.progress');
+const totop    = document.querySelector('.totop');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('main section');
+
+function onScroll(){
+  const y = window.scrollY;
+  header.classList.toggle('scrolled', y > 8);
+  totop.classList.toggle('show', y > 500);
+  const h = document.body.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? (y / h * 100) : 0) + '%';
+  let cur = '';
+  sections.forEach(s => { if (s.getBoundingClientRect().top <= 140) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+totop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+/* reveal on scroll */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------------------------------------------------------------- helpers */
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* --------------------------------------------------------------- projects */
+const projectsList = document.getElementById('projectsList');
+function renderProjects(filter){
+  const data = (typeof PROJECTS !== 'undefined') ? PROJECTS : [];
+  const show = data.filter(p => {
+    const st = (p.status === 'completed') ? 'completed' : 'active';
+    return filter === 'all' || st === filter;
+  });
+  if (!show.length){
+    projectsList.innerHTML = '<p class="events-empty">No projects to show here yet.</p>';
+    return;
+  }
+  projectsList.innerHTML = show.map(p => {
+    const st = (p.status === 'completed') ? 'completed' : 'active';
+    const label = st === 'completed' ? 'Completed' : 'Active';
+    return `<div class="project" data-status="${st}">
+      <div class="status ${st}"><span class="dot"></span>${label}</div>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.desc)}</p>
+    </div>`;
+  }).join('');
+}
+renderProjects('all');
+const fbtns = document.querySelectorAll('.filter-btn');
+fbtns.forEach(b => b.addEventListener('click', () => {
+  fbtns.forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  renderProjects(b.dataset.filter);
+}));
+
+/* ----------------------------------------------------------- publications */
+const pubList = document.getElementById('pubList');
+function renderPubs(){
+  const data = (typeof PUBLICATIONS !== 'undefined') ? PUBLICATIONS : [];
+  pubList.innerHTML = data.map(p => {
+    const link = p.link
+      ? `<a class="pub-link" href="${esc(p.link)}" target="_blank" rel="noopener">Read paper <i class="fas fa-arrow-up-right-from-square"></i></a>`
+      : '';
+    return `<div class="pub">
+      <div class="yr">${esc(p.year)}</div>
+      <div>
+        <h4>${esc(p.title)}</h4>
+        <p class="authors">${esc(p.authors)}</p>
+        <p class="venue">${esc(p.venue)}</p>
+        ${link}
+      </div>
+    </div>`;
+  }).join('') || '<p class="events-empty" style="border:none">No publications listed yet.</p>';
+}
+renderPubs();
+
+const ps = document.getElementById('pubSearch');
+ps.addEventListener('input', e => {
+  const t = e.target.value.toLowerCase();
+  let hits = 0;
+  document.querySelectorAll('#pubList .pub').forEach(p => {
+    const match = p.textContent.toLowerCase().includes(t);
+    p.style.display = match ? '' : 'none';
+    if (match) hits++;
+  });
+  let empty = document.getElementById('pubEmpty');
+  if (!hits){
+    if (!empty){
+      empty = document.createElement('p');
+      empty.id = 'pubEmpty';
+      empty.className = 'events-empty';
+      empty.style.border = 'none';
+      pubList.appendChild(empty);
+    }
+    empty.textContent = 'No publications match that search.';
+    empty.style.display = '';
+  } else if (empty){
+    empty.style.display = 'none';
+  }
+});
+
+/* ---------------------------------------------------------- contact form */
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const n  = document.getElementById('name').value;
+  const em = document.getElementById('email').value;
+  const s  = document.getElementById('subject').value;
+  const m  = document.getElementById('message').value;
+  window.location.href = 'mailto:ashraf.uddin@cihe.edu.au?subject=' +
+    encodeURIComponent(s) + '&body=' +
+    encodeURIComponent('From: ' + n + ' (' + em + ')\n\nMessage:\n' + m);
+  e.target.reset();
+});
+
+/* ----------------------------------------------------------- mobile menu */
+const mm = document.getElementById('mobileMenu');
+const menuBtn = document.querySelector('.menu-btn');
+function setMenu(open){
+  mm.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+window.closeMobileMenu = () => setMenu(false);
+menuBtn.addEventListener('click', () => setMenu(true));
+document.querySelector('.mobile-menu .close').addEventListener('click', () => setMenu(false));
+document.querySelectorAll('.mobile-body a').forEach(a =>
+  a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mm.classList.contains('open')) setMenu(false);
+});
+
+/* the mobile sign-in link mirrors the header button */
+const authBtnMobile = document.getElementById('authBtnMobile');
+if (authBtnMobile) authBtnMobile.addEventListener('click', e => {
+  e.preventDefault();
+  const b = document.getElementById('authBtn');
+  if (b) b.click();
+});
+
+/* the events-section CTA re-fires the hash handler when already on #register */
+const hostLink = document.getElementById('hostEventLink');
+if (hostLink) hostLink.addEventListener('click', () => {
+  if (location.hash === '#register') window.dispatchEvent(new HashChangeEvent('hashchange'));
+});
+</script>
+<script src="events-app.js"></script>
+</body>
+</html>
