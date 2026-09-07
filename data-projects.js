@@ -30,7 +30,7 @@ const PROJECTS = [
   {
     title: "Zero-Knowledge Proofs for Pharmaceutical Traceability",
     desc: "A blockchain-supported pharmaceutical traceability and recall platform designed for the Australian Capital Territory (ACT) public health context.",
-    status: "active"
+    status: "completed"
   },
   {
     title: "Explainable Hierarchical Model for Lung & Colon Cancer Detection",
@@ -45,7 +45,7 @@ const PROJECTS = [
   {
     title: "Graph-Based Semi-Supervised Detection of Illicit Bitcoin",
     desc: "A framework addressing the labeling challenge while comparing classical ML, ensemble, deep learning, and graph neural network approaches for detecting illicit Bitcoin transactions.",
-    status: "active"
+    status: "completed"
   },
   {
     title: "Scalable Hierarchical Intrusion Detection for IoV",
